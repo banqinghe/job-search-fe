@@ -1,4 +1,4 @@
-import githubIconUrl from '../assets/github-icon.svg';
+import githubIconUrl from '@/assets/github-icon.svg';
 
 function Footer() {
   return (

@@ -1,5 +1,5 @@
 import { GlobalState } from './state';
-import { Role } from '../enums';
+import { Role } from '@/enums';
 import { AuthAction } from './actions';
 
 const defaultState: GlobalState = {

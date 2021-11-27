@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LoginModal from './LoginModal';
+import LoginModal from '@/views/person/components/LoginModal';
 
 function Header() {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
