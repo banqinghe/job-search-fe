@@ -1,0 +1,92 @@
+[
+  {
+    "value": "technology",
+    "label": "技术",
+    "children": [
+      {
+        "value": "technology-developer",
+        "label": "技术开发",
+        "children": [
+          {
+            "value": "software-engineer",
+            "label": "软件工程师"
+          },
+          {
+            "value": "backend-engineer",
+            "label": "后端工程师"
+          },
+          {
+            "value": "frontend-engineer",
+            "label": "前端工程师"
+          },
+          {
+            "value": "mobile-engineer",
+            "label": "移动端工程师"
+          }
+        ]
+      },
+      {
+        "value": "test",
+        "label": "测试",
+        "children": [
+          {
+            "value": "test-engineer",
+            "label": "测试工程师"
+          },
+          {
+            "value": "auto-test",
+            "label": "自动化测试"
+          }
+        ]
+      },
+      {
+        "value": "algorithm",
+        "label": "算法",
+        "children": [
+          {
+            "value": "nlp-engineer",
+            "label": "NLP 算法工程师"
+          },
+          {
+            "value": "cv-engineer",
+            "label": "计算机视觉算法工程师"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "value": "service",
+    "label": "服务业",
+    "children": [
+      {
+        "value": "food",
+        "label": "餐饮",
+        "children": [
+          {
+            "value": "chief",
+            "label": "厨师"
+          },
+          {
+            "value": "waiter",
+            "label": "服务员"
+          }
+        ]
+      },
+      {
+        "value": "retail",
+        "label": "零售业",
+        "children": [
+          {
+            "value": "cashier",
+            "label": "收银员"
+          },
+          {
+            "value": "seller",
+            "label": "销售员"
+          }
+        ]
+      }
+    ]
+  }
+]

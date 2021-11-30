@@ -1,0 +1,5 @@
+{
+  "software-engineer": ["C/C++", "Golang", "DB", "Rust", "Bash", "Lua"],
+  "backend-engineer": ["Java", "Golang"],
+  "frontend-engineer": ["JavaScript", "CSS", "Less", "TypeScript", "Node"]
+}
