@@ -1,7 +1,6 @@
 import { Modal, Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-
 interface LoginModalProps {
   visible: boolean;
   onCancel: () => void;
@@ -29,7 +28,6 @@ function LoginModal(props: LoginModalProps) {
       <Form
         className="w-10/12 mx-auto"
         colon={false}
-        labelCol={{ span: 4, flex: 'justify-content: center' }}
         onFinish={vals => console.log(vals)}
         onFinishFailed={errInfo => console.log(errInfo)}
         requiredMark={false}
