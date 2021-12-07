@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Home from './views/home';
 import Register from './views/person/Register';
 import Personal from './views/person/Personal';
 import PersonalInfo from './views/person/PersonalInfo';
@@ -18,6 +19,7 @@ function App() {
       <Header style={isBarDisplay ? undefined : { display: 'none' }} />
       <main className="relative flex-1 flex">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/personal" element={<Personal />}>
             <Route index element={<PersonalInfo />} />
