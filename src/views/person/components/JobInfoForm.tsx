@@ -11,6 +11,7 @@ interface JobInfoFormProps {
   form: FormInstance;
   onFinish: (values: any) => void;
   onFinishFailed?: (errInfo: any) => void;
+  initialValues?: any;
 }
 
 function JobInfoForm(props: JobInfoFormProps) {
@@ -19,6 +20,7 @@ function JobInfoForm(props: JobInfoFormProps) {
     onFinish,
     onFinishFailed,
     form,
+    initialValues,
   } = props;
 
   const { Option } = Select;
@@ -35,6 +37,7 @@ function JobInfoForm(props: JobInfoFormProps) {
       requiredMark={false}
       colon={false}
       labelCol={{ span: 6 }}
+      initialValues={initialValues}
     >
       <Form.Item
         label="期望的职位类型"

@@ -8,7 +8,7 @@ const defaultState: GlobalState = {
     role: Role.NOT_LOGGED,
   },
   infoCompleteness: {
-    account: false,
+    account: true,
     jobInfo: false,
   },
   isBarDisplay: true,
@@ -39,6 +39,11 @@ function reducer(state = defaultState, action: any): GlobalState {
   switch (action.type) {
     case 'auth/login':
       return loginReducer(state, action);
+    case 'auth/logout':
+      return loginReducer(state, {
+        type: 'auth/login',
+        payload: { username: '', role: Role.NOT_LOGGED }
+      });
     case 'auth/infoCompleteness':
       return UserInfoCompletenessReducer(state, action);
     case 'bar/display':
