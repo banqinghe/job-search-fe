@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Popover } from 'antd';
 import LoginModal from '@/views/person/components/LoginModal';
+import { AuthState, GlobalState } from '@/store/state';
+import { Role } from '@/enums';
 
 interface HeaderProps{
   className?: string;
@@ -10,10 +14,22 @@ interface HeaderProps{
 function Header(props: HeaderProps) {
   const { className = '', style } = props;
 
+  const dispatch = useDispatch();
+  const auth = useSelector<GlobalState, AuthState>(state => state.auth);
+
   const [loginModalVisible, setLoginModalVisible] = useState(false);
 
-  function handleLogin() {
+  function handleClickLogin() {
     setLoginModalVisible(true);
+  }
+
+  function handleLoginFinish() {
+    setLoginModalVisible(false);
+  }
+
+  function handleLogout() {
+    dispatch({type: 'auth/logout'});
+    // setLoginModalVisible(false);
   }
 
   return (
@@ -39,8 +55,40 @@ function Header(props: HeaderProps) {
           1. 登录，显示个人中心按钮
           2. 未登录，显示登录按钮
         */}
-        <div className="cursor-pointer" onClick={handleLogin}>登录</div>
-        <LoginModal visible={loginModalVisible} onCancel={() => setLoginModalVisible(false)} />
+        {auth.role !== Role.NOT_LOGGED ? (
+          <Popover
+            content={(
+              <div className="flex flex-col">
+                <button type="button" className="mb-2">
+                  <Link className="text-black" to="/personal">个人中心</Link>
+                </button>
+                <button
+                  type="button"
+                  className="hover:text-blue-400"
+                  onClick={handleLogout}
+                >
+                  退出登录
+                </button>
+              </div>
+            )}
+            // visible={userPopoverVisible}
+            trigger={['hover', 'focus']}
+            placement="bottom"
+          >
+            <div tabIndex={0} className="cursor-pointer">
+              用户 {auth.username}
+            </div>
+          </Popover>
+        ) : (
+          <>
+            <div className="cursor-pointer" onClick={handleClickLogin}>登录</div>
+            <LoginModal 
+              visible={loginModalVisible}
+              onFinish={handleLoginFinish}
+              onCancel={() => setLoginModalVisible(false)}
+            />
+          </>
+        )}
       </div>
     </header>
   );

@@ -1,15 +1,28 @@
 import { Modal, Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Role } from '@/enums';
 interface LoginModalProps {
   visible: boolean;
+  onFinish: () => void;
   onCancel: () => void;
 }
 
 function LoginModal(props: LoginModalProps) {
-  const { visible, onCancel } = props;
+  const { visible, onCancel, onFinish } = props;
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  function handleLogin(values: any) {
+    // TODO: 登录验证
+    dispatch({type: 'auth/login', payload: {
+      username: values.username,
+      role: Role.JOB_HUNTER,
+    }});
+    onFinish && onFinish();
+  }
 
   function handleClickRegister() {
     onCancel();
@@ -28,7 +41,7 @@ function LoginModal(props: LoginModalProps) {
       <Form
         className="w-10/12 mx-auto"
         colon={false}
-        onFinish={vals => console.log(vals)}
+        onFinish={handleLogin}
         onFinishFailed={errInfo => console.log(errInfo)}
         requiredMark={false}
       >
