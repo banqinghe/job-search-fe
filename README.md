@@ -27,6 +27,8 @@ npm run dev
         // 求职者属性
         jobType:     string;               // 期望职位
         jobTag:      string[] | null;      // 职位标签 (可选), 如 ["Java", "Golang"]
+        university:  string;               // 毕业院校
+        education:   string;               // 最高学历
         city:        string;               // 期望城市
         salaryRange: number[];             // 期望薪资范围, 格式为长度为2的数组 (例: [3, 15] 表示期望薪资为 3k-15k)
         university:  string;               // 毕业院校
