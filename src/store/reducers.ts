@@ -1,6 +1,6 @@
 import { GlobalState, UserInfoCompletenessState } from './state';
 import { Role } from '@/enums';
-import { AuthAction, isBarDisplayAction, UserInfoCompletenessAction } from './actions';
+import { AuthAction, isBarDisplayAction, UserInfoCompletenessAction, UserInfoAction } from './actions';
 
 const defaultState: GlobalState = {
   auth: {
@@ -8,16 +8,37 @@ const defaultState: GlobalState = {
     role: Role.NOT_LOGGED,
   },
   infoCompleteness: {
-    account: true,
+    account: false,
     jobInfo: false,
+  },
+  userInfo: {
+    username: '',
+    role: Role.NOT_LOGGED,
+    name: '',
+    email: '',
+    // jobType: '前端',
+    // jobTag: ['JavaScript', 'React'],
+    // city: '上海',
+    // minSalary: 1,
+    // maxSalary: 100,
+    // userType: 'campus',
   },
   isBarDisplay: true,
 };
 
-function loginReducer(prevState: GlobalState, action: AuthAction): GlobalState {
+// 登录，获取用户信息
+function loginReducer(prevState: GlobalState, action: UserInfoAction): GlobalState {
   return {
     ...prevState,
-    auth: action.payload,
+    userInfo: action.payload,
+  };
+}
+
+// 退出登录，移除用户信息，重置角色信息
+function logoutReducer(prevState: GlobalState, action: any): GlobalState {
+  return {
+    ...prevState,
+    userInfo: { username: '', role: Role.NOT_LOGGED, name: '', email: '' },
   };
 }
 
@@ -25,6 +46,14 @@ function UserInfoCompletenessReducer(prevState: GlobalState, action: UserInfoCom
   return {
     ...prevState,
     infoCompleteness: {...prevState.infoCompleteness, ...action.payload},
+  };
+}
+
+// 用户信息更新，用户信息包括基本信息 和 求职者与招聘者不同的特定信息
+function UserInfoReducer(prevState: GlobalState, action: UserInfoAction) {
+  return {
+    ...prevState,
+    userInfo: {...action.payload},
   };
 }
 
@@ -40,10 +69,9 @@ function reducer(state = defaultState, action: any): GlobalState {
     case 'auth/login':
       return loginReducer(state, action);
     case 'auth/logout':
-      return loginReducer(state, {
-        type: 'auth/login',
-        payload: { username: '', role: Role.NOT_LOGGED }
-      });
+      return logoutReducer(state, action);
+    case 'auth/updateInfo':
+      return UserInfoReducer(state, action);
     case 'auth/infoCompleteness':
       return UserInfoCompletenessReducer(state, action);
     case 'bar/display':

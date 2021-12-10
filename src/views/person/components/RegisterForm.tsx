@@ -1,5 +1,5 @@
-import { Form, FormInstance, Input } from 'antd';
-import { UserOutlined, LockOutlined, UnlockOutlined, MailOutlined } from '@ant-design/icons';
+import { Form, FormInstance, Input, Radio } from 'antd';
+import { UserOutlined, LockOutlined, UnlockOutlined, MailOutlined, ProfileOutlined } from '@ant-design/icons';
 
 interface RegisterFormProps {
   className?: string;
@@ -8,6 +8,15 @@ interface RegisterFormProps {
   onFinishFailed?: (errInfo: any) => void;
 }
 
+/**
+ * 基本信息表单, 表单项包括:
+ * - username:        string
+ * - password:        string
+ * - passwordConfirm: string
+ * - name:            string
+ * - email:           string
+ * - role:            'jobHunter' | 'recruiter'
+ */
 function RegisterForm(props: RegisterFormProps) {
   const {
     className = '',
@@ -49,6 +58,12 @@ function RegisterForm(props: RegisterFormProps) {
         <Input.Password placeholder="确认密码" prefix={<UnlockOutlined className="mr-2.5" />} visibilityToggle={false} />
       </Form.Item>
       <Form.Item
+        name="name"
+        rules={[{ required: true, message: '请输入姓名' }]}
+      >
+        <Input placeholder="你的真实姓名" prefix={<ProfileOutlined className="mr-2.5" />} />
+      </Form.Item>
+      <Form.Item
         name="email"
         rules={[
           { required: true, message: '请输入你的邮箱' },
@@ -56,6 +71,27 @@ function RegisterForm(props: RegisterFormProps) {
         ]}
       >
         <Input placeholder="邮箱地址" prefix={<MailOutlined className="mr-2.5" />} />
+      </Form.Item>
+      <Form.Item
+        name="role"
+        initialValue="jobHunter"
+      >
+        <Radio.Group className="w-full">
+          <Radio.Button
+            value="jobHunter"
+            className="h-12 inline-flex items-center justify-center"
+            style={{ width: '50%' }}
+          >
+            我是求职者
+          </Radio.Button>
+          <Radio.Button
+            value="recruiter"
+            className="h-12 inline-flex items-center justify-center"
+            style={{ width: '50%' }}
+          >
+            我是招聘者
+          </Radio.Button>
+        </Radio.Group>
       </Form.Item>
     </Form>
   );
