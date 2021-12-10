@@ -40,12 +40,13 @@ function Register() {
         .resolve()
         .then(() => {
           dispatch({
-            type: 'auth/updateInfo',
+            type: 'user/updateInfo',
             payload: {
-              username: values['username'],
-              name: values['name'],
-              role: values['role'] === 'jobHunter' ? Role.JOB_HUNTER : Role.RECRUITER,
-              email: values['email'],
+              username: values.username,
+              name: values.name,
+              role: values.role === 'jobHunter' ? Role.JOB_HUNTER : Role.RECRUITER,
+              phoneNumber: values.phoneNumber,
+              email: values.email,
             },
           });
         });
@@ -57,11 +58,13 @@ function Register() {
         .resolve()
         .then(() => {
           dispatch({
-            type: 'auth/updateInfo',
+            type: 'user/updateInfo',
             payload: {
               ...userInfo,
               jobType: values.jobType[values.jobType.length - 1],
               jobTag: values.jobTag,
+              university: values.university,
+              education: values.education,
               city: values.city[values.city.length - 1],
               salaryRange: [values.minSalary, values.maxSalary],
               userType: values.userType,
@@ -74,7 +77,7 @@ function Register() {
         .resolve()
         .then(() => {
           dispatch({
-            type: 'auth/updateInfo',
+            type: 'user/updateInfo',
             payload: {
               ...userInfo,
               company: values.companyName,

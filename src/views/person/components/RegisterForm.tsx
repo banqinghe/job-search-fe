@@ -1,5 +1,11 @@
 import { Form, FormInstance, Input, Radio } from 'antd';
-import { UserOutlined, LockOutlined, UnlockOutlined, MailOutlined, ProfileOutlined } from '@ant-design/icons';
+import { UserOutlined,
+  LockOutlined,
+  UnlockOutlined,
+  MailOutlined,
+  ProfileOutlined,
+  PhoneOutlined
+} from '@ant-design/icons';
 
 interface RegisterFormProps {
   className?: string;
@@ -14,6 +20,7 @@ interface RegisterFormProps {
  * - password:        string
  * - passwordConfirm: string
  * - name:            string
+ * - phoneNumber      string
  * - email:           string
  * - role:            'jobHunter' | 'recruiter'
  */
@@ -62,6 +69,12 @@ function RegisterForm(props: RegisterFormProps) {
         rules={[{ required: true, message: '请输入姓名' }]}
       >
         <Input placeholder="你的真实姓名" prefix={<ProfileOutlined className="mr-2.5" />} />
+      </Form.Item>
+      <Form.Item
+        name="phoneNumber"
+        rules={[{ required: true, message: '请输入你的电话号码' }]}
+      >
+        <Input addonBefore="+86" placeholder="电话号码" />
       </Form.Item>
       <Form.Item
         name="email"

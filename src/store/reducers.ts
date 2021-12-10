@@ -16,6 +16,7 @@ const defaultState: GlobalState = {
     role: Role.NOT_LOGGED,
     name: '',
     email: '',
+    phoneNumber: '',
     // jobType: '前端',
     // jobTag: ['JavaScript', 'React'],
     // city: '上海',
@@ -38,7 +39,7 @@ function loginReducer(prevState: GlobalState, action: UserInfoAction): GlobalSta
 function logoutReducer(prevState: GlobalState, action: any): GlobalState {
   return {
     ...prevState,
-    userInfo: { username: '', role: Role.NOT_LOGGED, name: '', email: '' },
+    userInfo: { username: '', role: Role.NOT_LOGGED, name: '', email: '', phoneNumber: '' },
   };
 }
 
@@ -66,13 +67,13 @@ function barDisplayReducer(prevState: GlobalState, action: isBarDisplayAction): 
 
 function reducer(state = defaultState, action: any): GlobalState {
   switch (action.type) {
-    case 'auth/login':
+    case 'user/login':
       return loginReducer(state, action);
-    case 'auth/logout':
+    case 'user/logout':
       return logoutReducer(state, action);
-    case 'auth/updateInfo':
+    case 'user/updateInfo':
       return UserInfoReducer(state, action);
-    case 'auth/infoCompleteness':
+    case 'user/infoCompleteness':
       return UserInfoCompletenessReducer(state, action);
     case 'bar/display':
       return barDisplayReducer(state, action);

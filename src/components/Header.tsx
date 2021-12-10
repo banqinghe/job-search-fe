@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Popover } from 'antd';
 import LoginModal from '@/views/person/components/LoginModal';
@@ -14,6 +14,7 @@ interface HeaderProps{
 function Header(props: HeaderProps) {
   const { className = '', style } = props;
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
 
@@ -28,7 +29,8 @@ function Header(props: HeaderProps) {
   }
 
   function handleLogout() {
-    dispatch({type: 'auth/logout'});
+    dispatch({type: 'user/logout'});
+    navigate('/');
     // setLoginModalVisible(false);
   }
 

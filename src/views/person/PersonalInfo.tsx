@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { Tag, Avatar, Tooltip } from 'antd';
 import {
   MailOutlined,
@@ -6,27 +7,8 @@ import {
   CloudUploadOutlined,
   DesktopOutlined
 } from '@ant-design/icons';
-// import { Document } from 'react-pdf';
 import pdfUrl from '@/assets/pdf-test.pdf';
-// import { pdfjs } from 'react-pdf';
-// import workerUrl from '@/assets/pdf.worker.min.js?url';
-// console.log('worker url:', workerUrl);
-// pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
-
-const basicInfo = {
-  name: '班庆贺',
-  age: '21',
-  university: '华东师范大学',
-  education: '本科',
-  email: 'qingheban@qq.com',
-  phoneNumber: '18766668888'
-}
-
-const jobInfo = {
-  jobType: '前端开发',
-  city: '上海',
-  userType: 'campus',
-}
+import { GlobalState, UserInfoState } from '@/store/state';
 
 // TODO: 推荐职位，iframe 调整一下样式
 const recommendation = [
@@ -34,6 +16,8 @@ const recommendation = [
 ]
 
 function PersonalInfo() {
+  const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
+
   return (
     <div className="px-8 py-6 space-y-6">
       {/* Card 1: 个人信息 */}
@@ -42,9 +26,9 @@ function PersonalInfo() {
         <div className="flex-1">
           {/* 真实姓名 */}
           <div className="flex items-end mb-5">
-            <span className="mr-2 text-2xl font-bold">{basicInfo.name}</span>
+            <span className="mr-2 text-2xl font-bold">{userInfo.name}</span>
             <div className="relative bottom-1 left-1">
-              {jobInfo.userType === 'campus' ?
+              {userInfo.userType === 'campus' ?
                 <Tag color="#87d068" className="px-1">应届生</Tag> :
                 <Tag color="2db7f5" className="px-1">职场人士</Tag>
               }
@@ -54,13 +38,13 @@ function PersonalInfo() {
           {/* 具体个人信息 */}
           <div>
             <div className="flex items-center mb-2">
-              <div className="mr-8">{basicInfo.university} {basicInfo.education}</div>
+              <div className="mr-8">{userInfo.university} {userInfo.education}</div>
               <div className="flex space-x-4 text-sm">
-                <div className="flex items-center">{<MailOutlined className="mr-1.5" />}{basicInfo.email}</div>
-                <div className="flex items-center">{<PhoneOutlined className="mr-1.5" />}(+86) {basicInfo.phoneNumber}</div>
+                <div className="flex items-center">{<MailOutlined className="mr-1.5" />}{userInfo.email}</div>
+                <div className="flex items-center">{<PhoneOutlined className="mr-1.5" />}(+86) {userInfo.phoneNumber}</div>
               </div>
             </div>
-            <div>{jobInfo.jobType} {jobInfo.city}</div>
+            <div>{userInfo.jobType} {userInfo.city}</div>
           </div>
         </div>
         
