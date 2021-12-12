@@ -5,7 +5,7 @@ import { Form, Button, message } from 'antd';
 import RegisterForm from './components/RegisterForm';
 import JobInfoForm from './components/JobInfoForm';
 import CompanyInfoForm from './components/CompanyInfoForm';
-import { GlobalState, UserInfoState, UserInfoCompletenessState } from '@/store/state';
+import { GlobalState, UserInfoState } from '@/store/state';
 import { Role } from '@/enums';
 
 function Register() {

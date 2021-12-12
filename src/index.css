@@ -10,3 +10,7 @@ body {
 a:hover {
     color: unset;
 }
+
+.ant-modal-content {
+    border-radius: 8px;
+}

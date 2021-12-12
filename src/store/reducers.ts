@@ -1,15 +1,11 @@
-import { GlobalState, UserInfoCompletenessState } from './state';
+import { GlobalState } from './state';
 import { Role } from '@/enums';
-import { AuthAction, isBarDisplayAction, UserInfoCompletenessAction, UserInfoAction } from './actions';
+import { AuthAction, isBarDisplayAction, UserInfoAction } from './actions';
 
 const defaultState: GlobalState = {
   auth: {
     username: '',
     role: Role.NOT_LOGGED,
-  },
-  infoCompleteness: {
-    account: false,
-    jobInfo: false,
   },
   userInfo: {
     username: '',
@@ -43,18 +39,14 @@ function logoutReducer(prevState: GlobalState, action: any): GlobalState {
   };
 }
 
-function UserInfoCompletenessReducer(prevState: GlobalState, action: UserInfoCompletenessAction): GlobalState {
-  return {
-    ...prevState,
-    infoCompleteness: {...prevState.infoCompleteness, ...action.payload},
-  };
-}
-
 // 用户信息更新，用户信息包括基本信息 和 求职者与招聘者不同的特定信息
 function UserInfoReducer(prevState: GlobalState, action: UserInfoAction) {
   return {
     ...prevState,
-    userInfo: {...action.payload},
+    userInfo: {
+      ...prevState.userInfo,
+      ...action.payload
+    },
   };
 }
 
@@ -73,8 +65,6 @@ function reducer(state = defaultState, action: any): GlobalState {
       return logoutReducer(state, action);
     case 'user/updateInfo':
       return UserInfoReducer(state, action);
-    case 'user/infoCompleteness':
-      return UserInfoCompletenessReducer(state, action);
     case 'bar/display':
       return barDisplayReducer(state, action);
     default:

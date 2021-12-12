@@ -5,15 +5,9 @@ export interface AuthState {
   role: Role;
 }
 
-export interface UserInfoCompletenessState {
-  account?: boolean;
-  jobInfo?: boolean;
-}
-
 export interface GlobalState {
   auth: AuthState;
-  userInfo: UserInfoState,
-  infoCompleteness: UserInfoCompletenessState,
+  userInfo: UserInfoState;
   isBarDisplay: boolean;
 }
 
@@ -30,31 +24,11 @@ export interface UserInfoState {
   university?: string;
   education?: string;
   city?: string;
-  salaryRange?: number[] | undefined;
+  salaryRange?: number[];
   userType?: string;
+  resumeUrl?: string;
 
   // 招聘者特定信息
   company?: string;
   department?: string;
 }
-
-// export interface UserPublicInfo {
-//   username: string;
-//   role: Role;
-//   name: string;
-//   email: string;
-// }
-
-// export interface UserSpecificInfo {
-//   // 求职者特定信息
-//   jobType?: string;
-//   jobTag?: string[] | undefined;
-//   city?: string;
-//   minSalary?: number;
-//   maxSalary?: number;
-//   userType?: string;
-  
-//   // 招聘者特定信息
-//   company?: string;
-//   department?: string;
-// }

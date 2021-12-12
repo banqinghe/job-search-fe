@@ -11,7 +11,8 @@
     "education": "本科",
     "city": "上海",
     "salaryRange": [1, 12],
-    "userType": "campus"
+    "userType": "campus",
+    "resumeUrl": "https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf"
   },
   {
     "username": "recruiter",
