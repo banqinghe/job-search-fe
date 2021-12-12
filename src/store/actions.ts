@@ -1,4 +1,4 @@
-import { AuthState, UserInfoCompletenessState } from "./state";
+import { AuthState, UserInfoState } from "./state";
 
 export interface GlobalAction {
   type: string;
@@ -9,8 +9,8 @@ export interface AuthAction extends GlobalAction {
   payload: AuthState;
 }
 
-export interface UserInfoCompletenessAction extends GlobalAction {
-  payload: UserInfoCompletenessState;
+export interface UserInfoAction extends GlobalAction {
+  payload: UserInfoState;
 }
 
 export interface isBarDisplayAction extends GlobalAction {

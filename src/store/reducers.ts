@@ -1,30 +1,52 @@
-import { GlobalState, UserInfoCompletenessState } from './state';
+import { GlobalState } from './state';
 import { Role } from '@/enums';
-import { AuthAction, isBarDisplayAction, UserInfoCompletenessAction } from './actions';
+import { AuthAction, isBarDisplayAction, UserInfoAction } from './actions';
 
 const defaultState: GlobalState = {
   auth: {
     username: '',
     role: Role.NOT_LOGGED,
   },
-  infoCompleteness: {
-    account: true,
-    jobInfo: false,
+  userInfo: {
+    username: '',
+    role: Role.NOT_LOGGED,
+    name: '',
+    email: '',
+    phoneNumber: '',
+    // jobType: '前端',
+    // jobTag: ['JavaScript', 'React'],
+    // city: '上海',
+    // minSalary: 1,
+    // maxSalary: 100,
+    // userType: 'campus',
   },
   isBarDisplay: true,
 };
 
-function loginReducer(prevState: GlobalState, action: AuthAction): GlobalState {
+// 登录，获取用户信息
+function loginReducer(prevState: GlobalState, action: UserInfoAction): GlobalState {
   return {
     ...prevState,
-    auth: action.payload,
+    userInfo: action.payload,
   };
 }
 
-function UserInfoCompletenessReducer(prevState: GlobalState, action: UserInfoCompletenessAction): GlobalState {
+// 退出登录，移除用户信息，重置角色信息
+function logoutReducer(prevState: GlobalState, action: any): GlobalState {
   return {
     ...prevState,
-    infoCompleteness: {...prevState.infoCompleteness, ...action.payload},
+    userInfo: { username: '', role: Role.NOT_LOGGED, name: '', email: '', phoneNumber: '' },
+  };
+}
+
+// 用户信息更新，用户信息包括基本信息 和 求职者与招聘者不同的特定信息
+function UserInfoReducer(prevState: GlobalState, action: UserInfoAction) {
+  return {
+    ...prevState,
+    userInfo: {
+      ...prevState.userInfo,
+      ...action.payload
+    },
   };
 }
 
@@ -37,15 +59,12 @@ function barDisplayReducer(prevState: GlobalState, action: isBarDisplayAction): 
 
 function reducer(state = defaultState, action: any): GlobalState {
   switch (action.type) {
-    case 'auth/login':
+    case 'user/login':
       return loginReducer(state, action);
-    case 'auth/logout':
-      return loginReducer(state, {
-        type: 'auth/login',
-        payload: { username: '', role: Role.NOT_LOGGED }
-      });
-    case 'auth/infoCompleteness':
-      return UserInfoCompletenessReducer(state, action);
+    case 'user/logout':
+      return logoutReducer(state, action);
+    case 'user/updateInfo':
+      return UserInfoReducer(state, action);
     case 'bar/display':
       return barDisplayReducer(state, action);
     default:

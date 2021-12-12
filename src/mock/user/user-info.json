@@ -1,0 +1,26 @@
+[
+  {
+    "username": "banqinghe",
+    "name": "班庆贺",
+    "role": "job_hunter",
+    "phoneNumber": "18736883285",
+    "email": "qingheban@qq.com",
+    "jobType": "前端工程师",
+    "jobTag": ["JavaScript", "React"],
+    "university": "华东师范大学",
+    "education": "本科",
+    "city": "上海",
+    "salaryRange": [1, 12],
+    "userType": "campus",
+    "resumeUrl": "https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf"
+  },
+  {
+    "username": "recruiter",
+    "name": "招聘大师",
+    "role": "recruiter",
+    "phoneNumber": "13788889999",
+    "email": "recruiter_master@gmail.com",
+    "company": "字节滚动",
+    "department": "食堂"
+  }
+]

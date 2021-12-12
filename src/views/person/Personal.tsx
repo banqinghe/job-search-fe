@@ -1,4 +1,9 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { message } from 'antd';
+import { GlobalState, UserInfoState } from '@/store/state';
+import { Role } from '@/enums';
 
 const asideContent = [
   { title: '个人信息', link: '' },
@@ -7,6 +12,16 @@ const asideContent = [
 ];
 
 function Personal() {
+  const navigate = useNavigate();
+  const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
+
+  useEffect(() => {
+    if (userInfo.role === Role.NOT_LOGGED) {
+      message.warning('非法访问, 请先登录账号');
+      navigate('/');
+    }
+  }, [userInfo]);
+
   const pathname = useLocation().pathname;
 
   return (

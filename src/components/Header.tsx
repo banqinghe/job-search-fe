@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Popover } from 'antd';
 import LoginModal from '@/views/person/components/LoginModal';
-import { AuthState, GlobalState } from '@/store/state';
+import { UserInfoState, GlobalState } from '@/store/state';
 import { Role } from '@/enums';
 
 interface HeaderProps{
@@ -14,8 +14,9 @@ interface HeaderProps{
 function Header(props: HeaderProps) {
   const { className = '', style } = props;
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const auth = useSelector<GlobalState, AuthState>(state => state.auth);
+  const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
 
   const [loginModalVisible, setLoginModalVisible] = useState(false);
 
@@ -28,7 +29,8 @@ function Header(props: HeaderProps) {
   }
 
   function handleLogout() {
-    dispatch({type: 'auth/logout'});
+    dispatch({type: 'user/logout'});
+    navigate('/');
     // setLoginModalVisible(false);
   }
 
@@ -55,7 +57,7 @@ function Header(props: HeaderProps) {
           1. 登录，显示个人中心按钮
           2. 未登录，显示登录按钮
         */}
-        {auth.role !== Role.NOT_LOGGED ? (
+        {userInfo.role !== Role.NOT_LOGGED ? (
           <Popover
             content={(
               <div className="flex flex-col">
@@ -76,7 +78,7 @@ function Header(props: HeaderProps) {
             placement="bottom"
           >
             <div tabIndex={0} className="cursor-pointer">
-              用户 {auth.username}
+              用户 {userInfo.username}
             </div>
           </Popover>
         ) : (

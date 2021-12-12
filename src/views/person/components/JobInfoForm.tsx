@@ -1,4 +1,4 @@
-import { Form, FormInstance, Cascader, Select, Radio } from 'antd';
+import { Form, FormInstance, Cascader, Select, Radio, Input } from 'antd';
 import JobData from '@/assets/job-data/job-type.json';
 import JobTag from '@/assets/job-data/job-tag.json';
 import cities from '@/assets/city.json';
@@ -71,6 +71,30 @@ function JobInfoForm(props: JobInfoFormProps) {
           </Select>
         </Form.Item>
       )}
+      <Form.Item label="学历信息">
+        <Input.Group compact>
+          <Form.Item
+            name="university"
+            rules={[{ required: true, message: '请填写毕业院校' }]}
+            style={{ width: '60%', margin: 0 }}
+          >
+            <Input placeholder="毕业院校" />
+          </Form.Item>
+          <Form.Item
+            name="education"
+            rules={[{ required: true, message: '最高学历' }]}
+            style={{ width: '40%', margin: 0 }}
+          >
+            <Select style={{ width: '100%' }}>
+              <Option value="中专及以下">中专及以下</Option>
+              <Option value="大专">大专</Option>
+              <Option value="本科">本科</Option>
+              <Option value="硕士">硕士</Option>
+              <Option value="博士">博士</Option>
+            </Select>
+          </Form.Item>
+        </Input.Group>
+      </Form.Item>
       <Form.Item
         label="期望城市"
         name="city"

@@ -1,8 +1,12 @@
-import { Modal, Form, Input, Button } from 'antd';
+import { Modal, Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Role } from '@/enums';
+
+// mock user info
+import MockUserInfoList from '@/mock/user/user-info.json';
+
 interface LoginModalProps {
   visible: boolean;
   onFinish: () => void;
@@ -16,12 +20,20 @@ function LoginModal(props: LoginModalProps) {
   const navigate = useNavigate();
 
   function handleLogin(values: any) {
-    // TODO: 登录验证
-    dispatch({type: 'auth/login', payload: {
-      username: values.username,
-      role: Role.JOB_HUNTER,
-    }});
-    onFinish && onFinish();
+    // TODO: 登录验证, 请求完整 user info
+    Promise.resolve().then(() => {
+      let userInfo;
+      if (values.username === 'banqinghe') {
+        userInfo = MockUserInfoList[0];
+      } else if (values.username === 'recruiter') {
+        userInfo = MockUserInfoList[1];
+      } else {
+        message.error('用户名或密码错误');
+        return;
+      }
+      dispatch({type: 'user/updateInfo', payload: userInfo});
+      onFinish && onFinish();
+    });
   }
 
   function handleClickRegister() {
