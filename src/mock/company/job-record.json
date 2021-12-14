@@ -1,0 +1,22 @@
+[
+  {
+    "title": "服务员",
+    "id": "a",
+    "postTime": "2021-05-17 12:24",
+    "sendTime": "2021-06-22 10:35",
+    "company": "字节滚动",
+    "department": "火锅部",
+    "location": ["上海", "齐齐哈尔"],
+    "status": "read"
+  },
+  {
+    "title": "清洁工",
+    "id": "b",
+    "postTime": "2021-01-03 10:20",
+    "sendTime": "2021-03-20 21:35",
+    "company": "疼讯",
+    "department": "大街部",
+    "location": "海口",
+    "status": "unread"
+  }
+]
