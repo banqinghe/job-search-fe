@@ -5,10 +5,15 @@ import { message } from 'antd';
 import { GlobalState, UserInfoState } from '@/store/state';
 import { Role } from '@/enums';
 
-const asideContent = [
+const jobHunterAsideContent = [
   { title: '个人信息', link: '' },
   { title: '收藏职位', link: 'star' },
-  { title: '投递记录', link: 'records' }
+  { title: '投递记录', link: 'records' },
+];
+
+const recruiterAsideContent = [
+  { title: '个人主页', link: '' },
+  { title: '简历接收', link: 'resume-receive' },
 ];
 
 function Personal() {
@@ -29,17 +34,18 @@ function Personal() {
       {/* 侧边栏 */}
       <aside className="w-52 py-4 px-3 bg-white rounded-md">
         <ul className="text-center text-base">
-          {asideContent.map(item => (
-            <li
-              key={item.link} 
-              className={'rounded-md cursor-pointer ' +
-              (((item.link === '' && pathname.endsWith('personal')) || pathname.endsWith('/' + item.link)) ?
-                'bg-blue-50 text-blue-500 font-bold' :
-                'hover:bg-blue-50 hover:text-blue-500')
-            }>
-              <Link className="block py-2" to={item.link}>{item.title}</Link>
-            </li>
-          ))}
+          {(userInfo.role === Role.JOB_HUNTER ? jobHunterAsideContent : recruiterAsideContent)
+            .map(item => (
+              <li
+                key={item.link}
+                className={'rounded-md cursor-pointer ' +
+                  (((item.link === '' && pathname.endsWith('personal')) || pathname.endsWith('/' + item.link)) ?
+                    'bg-blue-50 text-blue-500 font-bold' :
+                    'hover:bg-blue-50 hover:text-blue-500')
+                }>
+                <Link className="block py-2" to={item.link}>{item.title}</Link>
+              </li>
+            ))}
         </ul>
       </aside>
 

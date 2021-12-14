@@ -180,6 +180,13 @@ export interface JobPosition {
   logoUrl: string;
 }
 
+export interface JobPositionDetail extends JobPosition {
+  /**
+   * 职位描述
+   */
+  description: string;
+}
+
 /**
  * 职位投递信息
  */

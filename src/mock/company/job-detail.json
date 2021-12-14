@@ -1,0 +1,37 @@
+[
+  {
+    "title": "清洁工",
+    "id": "0",
+    "postTime": "2021-05-17 12:24",
+    "salaryRange": [5, 10],
+    "company": "字节滚动",
+    "department": "食堂",
+    "location": "上海",
+    "logoUrl": "/src/assets/logo/one.jpg",
+    "description": "**职位描述:**\n\n清洁工是非常重要的岗位，职责是扫垃圾，希望各位好自为之。\n\n主要职责有:\n- 每天三次打扫地面\n- 每天一次打扫厕所\n- 周六周日都得加班"
+  },
+  {
+    "title": "前台行政",
+    "id": "1",
+    "postTime": "2020-12-31 16:10",
+    "experienceRequirement": "1-3年",
+    "salaryRange": [1, 20],
+    "company": "阿狸叭叭",
+    "department": "市场部",
+    "location": ["上海", "北京"],
+    "logoUrl": "/src/assets/logo/two.jpg",
+    "description": "# 有手就行"
+  },
+  {
+    "title": "外卖骑手",
+    "id": "2",
+    "postTime": "2021-10-29 15:47",
+    "salaryRange": [1, 20],
+    "educationRequirement": "博士",
+    "company": "没团",
+    "department": "快递送餐",
+    "location": "呼伦贝尔",
+    "logoUrl": "/src/assets/logo/three.jpg",
+    "description": "职位描述: 在分布式蒙古包之间送餐，是个*伟大*的职业。\n\n职位要求:\n1. 自备电瓶车\n2. 发放免费冲锋衣\n3. 不能违反交通规则"
+  }
+]
