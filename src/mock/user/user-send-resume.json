@@ -1,0 +1,29 @@
+[
+  {
+    "jobId": "101",
+    "jobTitle": "高级清洁工",
+    "candidateName": "大雄",
+    "candidateEducation": "华东师范大学/本科",
+    "candidatePhoneNumber": "13234568765",
+    "candidateEmail": "daxiong@doraemon.com",
+    "resumeUrl": "https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf"
+  },
+  {
+    "jobId": "102",
+    "jobTitle": "拳皇上分代练",
+    "candidateName": "胖虎",
+    "candidateEducation": "复旦大学/博士",
+    "candidatePhoneNumber": "13234562765",
+    "candidateEmail": "panghu@doraemon.com",
+    "resumeUrl": "https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf"
+  },
+  {
+    "jobId": "103",
+    "jobTitle": "炸鸡见习生",
+    "candidateName": "小夫",
+    "candidateEducation": "同济大学/硕士",
+    "candidatePhoneNumber": "13234512365",
+    "candidateEmail": "xiaofu@doraemon.com",
+    "resumeUrl": "https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf"
+  }
+]
