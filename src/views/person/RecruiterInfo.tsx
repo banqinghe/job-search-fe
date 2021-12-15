@@ -113,7 +113,7 @@ function RecruiterInfo() {
       {/* Card 2: 发布职位 */}
       <div>
         <div className="flex justify-between pb-4 mb-8 border-b">
-          <h2 className="text-xl font-bold">发布职位</h2>
+          <h2 className="text-xl font-bold">我发布的职位</h2>
           <Button
             className="self-end" type="primary" size="middle"
             onClick={() => {
