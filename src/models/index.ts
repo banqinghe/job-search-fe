@@ -123,6 +123,11 @@ export interface Company {
    * 在招职位数
    */
   jobNumber: number;
+
+  /**
+  * 投递简历数
+  */
+  resumeNumber: number;
 }
 
 /**
