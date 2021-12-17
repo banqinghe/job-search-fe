@@ -22,7 +22,7 @@ interface RegisterFormProps {
  * - name:            string
  * - phoneNumber      string
  * - email:           string
- * - role:            'jobHunter' | 'recruiter'
+ * - role:            'job_hunter' | 'recruiter'
  */
 function RegisterForm(props: RegisterFormProps) {
   const {
@@ -87,11 +87,11 @@ function RegisterForm(props: RegisterFormProps) {
       </Form.Item>
       <Form.Item
         name="role"
-        initialValue="jobHunter"
+        initialValue="job_hunter"
       >
         <Radio.Group className="w-full">
           <Radio.Button
-            value="jobHunter"
+            value="job_hunter"
             className="h-12 inline-flex items-center justify-center"
             style={{ width: '50%' }}
           >
