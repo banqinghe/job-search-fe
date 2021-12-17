@@ -8,12 +8,16 @@ import Personal from './views/person/Personal';
 import PersonalInfo from './views/person/PersonalInfo';
 import PersonalStar from './views/person/PersonalStar';
 import PersonalRecords from './views/person/PersonalRecords';
+import RecruiterInfo from './views/person/RecruiterInfo';
+import RecruiterResumeReceive from './views/person/RecruiterResumeReceive';
 import NoContent from './views/NoContent';
-import { GlobalState } from '@/store/state';
 import Job from './views/job';
+import { Role } from '@/enums'
+import { GlobalState, UserInfoState } from '@/store/state';
 
 function App() {
   const isBarDisplay = useSelector<GlobalState>(state => state.isBarDisplay);
+  const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -23,9 +27,21 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/personal" element={<Personal />}>
-            <Route index element={<PersonalInfo />} />
-            <Route path="star" element={<PersonalStar />} />
-            <Route path="records" element={<PersonalRecords />} />
+            {/* 求职者个人页 */}
+            {userInfo.role === Role.JOB_HUNTER && (
+              <>
+                <Route index element={<PersonalInfo />} />
+                <Route path="star" element={<PersonalStar />} />
+                <Route path="records" element={<PersonalRecords />} />
+              </>
+            )}
+            {/* 招聘者个人页 */}
+            {userInfo.role ===  Role.RECRUITER && (
+              <>
+                <Route index element={<RecruiterInfo />} />
+                <Route path="resume-receive" element={<RecruiterResumeReceive />} />
+              </>
+            )}
           </Route>
           <Route path="/job/:id" element={<Job />}/>
           <Route path="/404" element={<NoContent />}></Route>

@@ -147,7 +147,7 @@ export interface JobPosition {
   /**
    * 工作地点
    */
-   location: string | string[];
+  location: string | string[];
 
   /**
    * 经验要求 (可选), 若为空则表示不限
@@ -180,12 +180,54 @@ export interface JobPosition {
   logoUrl: string;
 }
 
-/**
- * 用于岗位详情页
- */
-export interface CompleteJobPosition extends JobPosition {
-   /**
-   * 岗位简介
+export interface JobPositionDetail extends JobPosition {
+  /**
+   * 职位描述
    */
-  introduction: string; 
+  description: string;
+}
+
+/**
+ * 职位投递信息
+ */
+export interface JobRecord {
+  /**
+   * 职位名称
+   */
+  title: string;
+
+  /**
+   * 职位 ID
+   */
+  id: string;
+
+  /**
+   * 发布时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
+   */
+  postTime: string;
+
+  /**
+   * 投递时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
+   */
+  sendTime: string;
+
+  /**
+   * 公司名称
+   */
+  company: string;
+
+  /**
+   * 职位所在部门
+   */
+  department: string;
+
+  /**
+   * 工作地点
+   */
+  location: string | string[];
+
+  /**
+   * 当前状态, 区分简历是否被对应 recruiter 下载
+   */
+  status: 'read' | 'unread';
 }

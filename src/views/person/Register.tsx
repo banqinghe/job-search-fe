@@ -44,7 +44,7 @@ function Register() {
             payload: {
               username: values.username,
               name: values.name,
-              role: values.role === 'jobHunter' ? Role.JOB_HUNTER : Role.RECRUITER,
+              role: values.role === 'job_hunter' ? Role.JOB_HUNTER : Role.RECRUITER,
               phoneNumber: values.phoneNumber,
               email: values.email,
             },
