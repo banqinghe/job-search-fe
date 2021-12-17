@@ -179,3 +179,13 @@ export interface JobPosition {
    */
   logoUrl: string;
 }
+
+/**
+ * 用于岗位详情页
+ */
+export interface CompleteJobPosition extends JobPosition {
+   /**
+   * 岗位简介
+   */
+  introduction: string; 
+}

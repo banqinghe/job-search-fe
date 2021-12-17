@@ -7,7 +7,7 @@
     "company": "字节滚动",
     "department": "食堂",
     "location": "上海",
-    "logoUrl": "src/assets/logo/one.jpg"
+    "logoUrl": "/src/assets/logo/one.jpg"
   },
   {
     "title": "前台行政",
@@ -18,7 +18,7 @@
     "company": "阿狸叭叭",
     "department": "市场部",
     "location": ["上海", "北京"],
-    "logoUrl": "src/assets/logo/two.jpg"
+    "logoUrl": "/src/assets/logo/two.jpg"
   },
   {
     "title": "外卖骑手",
@@ -29,6 +29,17 @@
     "company": "没团",
     "department": "快递送餐",
     "location": "呼伦贝尔",
-    "logoUrl": "src/assets/logo/three.jpg"
+    "logoUrl": "/src/assets/logo/four.jpg"
+  },
+  {
+    "title": "游戏开发",
+    "id": "3",
+    "postTime": "2021-10-29 15:47",
+    "salaryRange": [1, 20],
+    "educationRequirement": "博士",
+    "company": "地丑",
+    "department": "快递送餐",
+    "location": "呼伦贝尔",
+    "logoUrl": "/src/assets/logo/three.jpg"
   }
 ]

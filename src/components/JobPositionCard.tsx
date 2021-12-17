@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { JobPosition } from "@/models";
 
 interface JobPositionCardProps {
@@ -18,7 +18,8 @@ function JobPositionCard(props: JobPositionCardProps) {
   } = props;
 
   const navigate = useNavigate();
-
+  const hostname = window.location.host;
+  
   return (
     <div
       className={className + 
@@ -26,7 +27,7 @@ function JobPositionCard(props: JobPositionCardProps) {
       }
       style={style}
       // TODO: 点击跳转至相应职位详细页
-      onClick={onClick ?? (() => console.log('Click Job Card'))}
+      onClick={onClick ?? (() => window.open('http://' + hostname + '/job/' + jobInfo.id, '_blank'))}
       // onClick={onClick ?? (() => navigate(`/jobs/${jobInfo.id}`))}
     >
       {/* 职位信息 */}

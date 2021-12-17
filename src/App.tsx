@@ -10,6 +10,7 @@ import PersonalStar from './views/person/PersonalStar';
 import PersonalRecords from './views/person/PersonalRecords';
 import NoContent from './views/NoContent';
 import { GlobalState } from '@/store/state';
+import Job from './views/job';
 
 function App() {
   const isBarDisplay = useSelector<GlobalState>(state => state.isBarDisplay);
@@ -26,6 +27,7 @@ function App() {
             <Route path="star" element={<PersonalStar />} />
             <Route path="records" element={<PersonalRecords />} />
           </Route>
+          <Route path="/job/:id" element={<Job />}/>
           <Route path="/404" element={<NoContent />}></Route>
           <Route path="*" element={<Navigate to="/404" replace />}></Route>
         </Routes>

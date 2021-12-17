@@ -1,11 +1,10 @@
-import SearchInput from './components/SearchInput';
 import JobPositionCard from '@/components/JobPositionCard';
 import { JobPosition } from '@/models';
 import MockRecommendJobs from '@/mock/company/recommend-job-position.json';
 import { Tabs } from 'antd';
 
 const {TabPane} = Tabs;
-function Home() {
+function Job() {
   
 
     // console.log('basic info form -> onFinish:', {
@@ -36,9 +35,6 @@ function Home() {
     //   )}
     // </div>
     <div className="flex flex-col w-full">
-      <div className="bg-gray-100 p-6 w-full flex justify-center">
-        <SearchInput className="w-7/12" style={{ minWidth: 800 }}/>
-      </div>
       <Tabs defaultActiveKey="1" className="mx-20 mt-5">
         <TabPane tab="热门职位" key="1">
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
@@ -52,4 +48,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Job;
