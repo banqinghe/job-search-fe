@@ -3,14 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Company, JobPosition } from "@/models";
 import { Tooltip } from 'antd';
 
-interface JobPositionCardProps {
+interface CompanyCardProps {
   className?: string;
   style?: React.CSSProperties;
   companyInfo: Company;
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 } 
 
-function JobPositionCard(props: JobPositionCardProps) {
+function CompanyCard(props: CompanyCardProps) {
   const {
     className = '',
     style,
@@ -30,7 +30,7 @@ function JobPositionCard(props: JobPositionCardProps) {
     >
       <div className="flex flex-col items-center cursor-pointer"
         // TODO: 点击跳转至相应公司详情页
-        onClick={onClick ?? (() => window.open('http://' + hostname + '/company/' + companyInfo.name, '_blank'))}
+        onClick={onClick ?? (() => console.log('Click Job Card'))}
       >
         <img className="w-24 h-24" src={companyInfo.logoUrl} alt={companyInfo.name + ' logo'} />
         <h2 className="text-lg mt-2">
@@ -89,4 +89,4 @@ function JobPositionCard(props: JobPositionCardProps) {
   );
 }
 
-export default JobPositionCard;
+export default CompanyCard;

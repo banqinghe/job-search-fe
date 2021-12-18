@@ -27,7 +27,7 @@ function JobPositionCard(props: JobPositionCardProps) {
       }
       style={style}
       // TODO: 点击跳转至相应职位详细页
-      onClick={onClick ?? (() => window.open('http://' + hostname + '/job/' + jobInfo.id, '_blank'))}
+      onClick={onClick ?? (() => console.log('Click Job Card'))}
       // onClick={onClick ?? (() => navigate(`/jobs/${jobInfo.id}`))}
     >
       {/* 职位信息 */}
