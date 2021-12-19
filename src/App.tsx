@@ -11,6 +11,7 @@ import PersonalRecords from './views/person/PersonalRecords';
 import RecruiterInfo from './views/person/RecruiterInfo';
 import RecruiterResumeReceive from './views/person/RecruiterResumeReceive';
 import NoContent from './views/NoContent';
+import Job from './views/job';
 import { Role } from '@/enums'
 import { GlobalState, UserInfoState } from '@/store/state';
 
@@ -42,6 +43,7 @@ function App() {
               </>
             )}
           </Route>
+          <Route path="/job/:id" element={<Job />}/>
           <Route path="/404" element={<NoContent />}></Route>
           <Route path="*" element={<Navigate to="/404" replace />}></Route>
         </Routes>

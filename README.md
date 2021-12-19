@@ -64,6 +64,7 @@ npm run dev
         officialLink:   string;             // 官网地址
         location:       string | string[];  // 地点, 可以为多个或单个地点
         jobNumber:      number;             // 在招职位数
+        resumeNumber:   number;             // 投递简历数
     }
     
     /**

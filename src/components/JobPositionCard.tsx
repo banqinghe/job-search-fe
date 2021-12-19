@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { JobPosition } from "@/models";
 
 interface JobPositionCardProps {
@@ -18,7 +18,8 @@ function JobPositionCard(props: JobPositionCardProps) {
   } = props;
 
   const navigate = useNavigate();
-
+  const hostname = window.location.host;
+  
   return (
     <div
       className={className + 
