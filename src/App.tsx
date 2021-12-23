@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Home from './views/home';
 import Register from './views/person/Register';
 import Personal from './views/person/Personal';
 import PersonalInfo from './views/person/PersonalInfo';
@@ -10,6 +11,7 @@ import PersonalRecords from './views/person/PersonalRecords';
 import RecruiterInfo from './views/person/RecruiterInfo';
 import RecruiterResumeReceive from './views/person/RecruiterResumeReceive';
 import NoContent from './views/NoContent';
+import Job from './views/job';
 import { Role } from '@/enums'
 import { GlobalState, UserInfoState } from '@/store/state';
 
@@ -22,6 +24,7 @@ function App() {
       <Header style={isBarDisplay ? undefined : { display: 'none' }} />
       <main className="relative flex-1 flex">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/personal" element={<Personal />}>
             {/* 求职者个人页 */}
@@ -40,6 +43,7 @@ function App() {
               </>
             )}
           </Route>
+          <Route path="/job/:id" element={<Job />}/>
           <Route path="/404" element={<NoContent />}></Route>
           <Route path="*" element={<Navigate to="/404" replace />}></Route>
         </Routes>
