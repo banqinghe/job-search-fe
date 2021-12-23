@@ -4,36 +4,25 @@ from enum import Enum
 from pydantic import BaseModel
 
 
-class jobHunter(str, Enum):
+class Role(str, Enum):
     jobHunter = "jobHunter"
-
-
-class recuiter(str, Enum):
     recruiter = "recruiter"
 
 
 class UserBase(BaseModel):
     username: str
-    role: Union[jobHunter, recuiter]
-    name: str
-    phoneNumber: str
-    email: str
+
+
+class User(UserBase):
+    role: Role = None
+    name: str = None
+    phoneNumber: str = None
+    email: str = None
     avaterUrl: Optional[str]
 
-
-class UserLogin(BaseModel):
-    username: str
-    password: str
-
-
-class UserChangePassword(UserLogin):
-    newPassword: str
-
-
-class JobHunter(UserBase):
-    role: jobHunter
+    # jobHunter
     jobType: Optional[str]
-    jobTag: Optional[List[str]]
+    jobTags: Optional[List[str]]
     university: Optional[str]
     education: Optional[str]
     city: Optional[str]
@@ -41,9 +30,22 @@ class JobHunter(UserBase):
     userType: Optional[str]
     resumeUrl: Optional[str]
 
-
-class Recruiter(UserBase):
-    role: recuiter
+    # recruiter
     company: Optional[str]
     department: Optional[str]
 
+    class Config:
+        orm_mode = True
+
+
+class UserRegister(User):
+    password: str
+
+
+class UserLogin(UserBase):
+    password: str
+
+
+class UserChangePassword(UserBase):
+    password: str
+    newPassword: str
