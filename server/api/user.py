@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+import uuid
+import shutil
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
 
-import schemas
-import crud
+import schemas, crud, consts
 from database import get_db
 
 
@@ -60,3 +61,20 @@ def user_change_password(user: schemas.UserChangePassword,
 def user_update_info(user: schemas.User,
                      db: Session = Depends(get_db)):
     return crud.update_user(db, user)
+
+
+@router.post(
+        "/upload_file",
+        response_model=str
+)
+def upload_file(file: UploadFile = File(...)):
+    filename = str(uuid.uuid4())
+    path = consts.STORAGE_DIR / filename
+
+    try:
+        with path.open("wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
+    finally:
+        file.file.close()
+
+    return f"{consts.STORAGE_BASE_URL}/{filename}"

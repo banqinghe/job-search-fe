@@ -5,3 +5,5 @@ dist-ssr
 *.local
 
 __pycache__/
+server/storage/*
+!server/storage/.gitkeep

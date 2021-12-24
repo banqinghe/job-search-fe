@@ -4,6 +4,7 @@
 
 ```bash
 pip install -r requirements.txt
+npm install http-server -g
 ```
 
 ## Install Postgres (macOS)
@@ -16,7 +17,7 @@ Or if you want to use other SQL databases, setup by yourself and adjust the URL 
 ## Run the Server
 
 ```bash
-uvicorn main:app --reload
+./run.sh
 ```
 
 See http://localhost:8000/docs for the interactive API docs.
