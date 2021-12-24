@@ -33,5 +33,17 @@
     "location": "呼伦贝尔",
     "logoUrl": "/src/assets/logo/three.jpg",
     "description": "职位描述: 在分布式蒙古包之间送餐，是个*伟大*的职业。\n\n职位要求:\n1. 自备电瓶车\n2. 发放免费冲锋衣\n3. 不能违反交通规则"
+  },
+  {
+    "title": "游戏开发",
+    "id": "3",
+    "postTime": "2021-10-29 15:47",
+    "salaryRange": [1, 20],
+    "educationRequirement": "博士",
+    "company": "疼迅",
+    "department": "快递送餐",
+    "location": "呼伦贝尔",
+    "logoUrl": "/src/assets/logo/three.jpg",
+    "description": "# Effective TypeScript Notes\n\n## Getting to Know TypeScript\n\n- TypeScript 是 JavaScript 的超集，这意味着迁移很容易\n- 即使有一些代码是可以正常运行的，但是 TypeScript 依然会 Warning。TypeScript 会在它认为代码不符合开发者意图的情况下 Warning，而这里的 Warning 时机取决于其实取决于 TypeScript 的开发者\n\n  > How does TypeScript decide when to model JavaScript’s runtime behavior and when to go beyond it? Ultimately this is a matter of taste.\n\n  ```typescript\n  let a = '1' + 0; // correct\n  let b = [] + 1;  // warning\n  ```\n\n- TypeScript 的类型系统并不健全（sound），比如无法检测出数组的越界"
   }
 ]

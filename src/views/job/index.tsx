@@ -1,17 +1,18 @@
-import MockRecommendJobs from '@/mock/company/recommend-job-position.json';
+import MockJobs from '@/mock/company/job-detail.json';
 import MockRecommendCompanies from '@/mock/company/recommend-company.json';
 import { Button, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { HomeOutlined } from '@ant-design/icons'
+import { HomeOutlined, UserOutlined, FileOutlined } from '@ant-design/icons'
 import { Company } from '@/models';
+import ReactMarkdown from 'react-markdown';
 
 function Job() {
   const [collectLoading, setCollectLoading] = useState(false);
   const [sendLoading, setSendLoading] = useState(false);
   const params = useParams();
   const id = parseInt(params.id ?? '-1', 10);
-  const job = MockRecommendJobs[id];
+  const job = MockJobs[id];
   
   const [companyInfo, setCompanyInfo] = useState<Company | null>(null);
 
@@ -21,12 +22,13 @@ function Job() {
         setCompanyInfo(company)
       }
     })
+    document.title = job.title + '招聘';
   }, [id])
 
   return (
     <div className="flex flex-col w-full bg-gray-100">
       <div className="flex justify-between mx-60">
-        <div className="flex flex-col space-y-5">
+        <div className="flex flex-col space-y-5" style={{ minWidth: 350 }}>
           <p className="mt-7 space-x-2">
             <span className='text-2xl'>{job.title}</span>
             <span className="text-blue-500 text-2xl font-bold">
@@ -65,7 +67,7 @@ function Job() {
           </Button>
         </div>
       </div>
-      <div className="flex ml-60 mb-10">
+      <div className="flex ml-60 mb-7" style={{ minWidth: 350 }}>
         <p className="mt-5 space-x-5">
           <span className="text-gray-600 text-base">{job.company}</span>
           <span className="text-gray-400 text-sm">{job.postTime}</span>
@@ -75,20 +77,29 @@ function Job() {
       
       <div className="flex space-x-2 h-full">
         <div className="flex-1 bg-white pl-60">
-          123
+          <ReactMarkdown className="markdown-body py-5 pr-12">{job.description}</ReactMarkdown>
         </div>
-        <div className="flex flex-col items-start bg-white pr-60 pl-8 pt-6 space-y-5">
-          <div className="flex items-end space-x-5">
+        <div className="flex flex-col items-start bg-white pr-24 pl-8 pt-6">
+          <div className="flex items-end space-x-5 cursor-pointer" style={{ minWidth: 200 }} onClick={() => open('/company/' + job.company, '_blank')}>
             <img className="w-24 h-24 border border-gray-200" src={job.logoUrl} alt={job.company + ' logo'} />
             <span className="text-lg">{job.company}</span>
           </div>
-          <p>
-            <HomeOutlined />
-            {companyInfo && (
-              <a href={companyInfo.officialLink}>公司官网</a>
-            )}
-            {/* <a href={company. }>公司官网</a> */}
-          </p>
+          {companyInfo && (
+            <div className="space-y-4 mt-6" style={{ minWidth: 200 }}>
+              <p className="flex items-center space-x-2">
+                <HomeOutlined />
+                <a href={companyInfo.officialLink} target="_blank">公司官网</a>
+              </p>
+              <p className="flex items-center space-x-2">
+                <UserOutlined />
+                  <span>{'在招岗位 ' + companyInfo.jobNumber}</span>
+              </p>
+              <p className="flex items-center space-x-2">
+                <FileOutlined />
+                  <span>{'已收简历 ' + companyInfo.resumeNumber}</span>
+              </p>
+            </div>
+          )}
         </div>
       </div>
       

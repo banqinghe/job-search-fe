@@ -14,6 +14,7 @@ import NoContent from './views/NoContent';
 import Job from './views/job';
 import { Role } from '@/enums'
 import { GlobalState, UserInfoState } from '@/store/state';
+import Company from './views/company';
 
 function App() {
   const isBarDisplay = useSelector<GlobalState>(state => state.isBarDisplay);
@@ -44,6 +45,7 @@ function App() {
             )}
           </Route>
           <Route path="/job/:id" element={<Job />}/>
+          <Route path="/company/:name" element={<Company />}/>
           <Route path="/404" element={<NoContent />}></Route>
           <Route path="*" element={<Navigate to="/404" replace />}></Route>
         </Routes>
