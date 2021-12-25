@@ -41,11 +41,8 @@ function CompanyPage() {
                 <p>招聘岗位</p>
               </div>
               <div className = "flex flex-col items-center justify-center px-5 text-gray-500">
-                <p>{companyInfo.jobNumber}</p>
-                <p>招聘岗位</p>
-              </div><div className = "flex flex-col items-center justify-center px-5 text-gray-500">
-                <p>{companyInfo.jobNumber}</p>
-                <p>招聘岗位</p>
+                <p>{companyInfo.resumeNumber}</p>
+                <p>收到简历</p>
               </div>
             </div>
           </div>

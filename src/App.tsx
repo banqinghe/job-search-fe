@@ -15,6 +15,8 @@ import Job from './views/job';
 import { Role } from '@/enums'
 import { GlobalState, UserInfoState } from '@/store/state';
 import Company from './views/company';
+import Jobs from './views/jobs';
+import Companies from './views/companies';
 
 function App() {
   const isBarDisplay = useSelector<GlobalState>(state => state.isBarDisplay);
@@ -47,6 +49,8 @@ function App() {
           <Route path="/job/:id" element={<Job />}/>
           <Route path="/company/:name" element={<Company />}/>
           <Route path="/404" element={<NoContent />}></Route>
+          <Route path="/jobs" element={<Jobs />}/>
+          <Route path="/companies" element={<Companies />} />
           <Route path="*" element={<Navigate to="/404" replace />}></Route>
         </Routes>
       </main>
