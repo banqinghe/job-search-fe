@@ -3,7 +3,9 @@ import shutil
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
 
-import schemas, crud, consts
+import schemas
+import crud
+import consts
 from database import get_db
 
 

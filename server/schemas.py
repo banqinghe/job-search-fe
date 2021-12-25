@@ -1,4 +1,5 @@
 from typing import Optional, List, Union
+from datetime import datetime
 from enum import Enum
 
 from pydantic import BaseModel
@@ -18,7 +19,7 @@ class User(UserBase):
     name: str = None
     phoneNumber: str = None
     email: str = None
-    avaterUrl: Optional[str]
+    avatarUrl: Optional[str]
 
     # jobHunter
     jobType: Optional[str]
@@ -49,3 +50,15 @@ class UserLogin(UserBase):
 class UserChangePassword(UserBase):
     password: str
     newPassword: str
+
+
+class jobPosition(BaseModel):
+    id: str
+    title: str
+    postTime: datetime
+    experienceRequirement: Optional[str]
+    educationRequiretment: Optional[str]
+    salaryRange: Optional[List[int]]
+    company: str
+    department: str
+    logoUrl: str

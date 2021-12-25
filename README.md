@@ -106,7 +106,7 @@ npm run dev
     export interface JobRecord {
         title:      string;             // 职位名称
         id:         string;             // 职位 ID
-    postTime:   string;             // 发布时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
+        postTime:   string;             // 发布时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
         sendTime:   string;             // 投递时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
         company:    string;             // 公司名称
         department: string;             // 职位所在部门
@@ -253,7 +253,7 @@ npm run dev
 
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
-| url | string | 头像静态链接 |
+| url | string | 文件静态链接 |
 
 #### 获取推荐职位
 
