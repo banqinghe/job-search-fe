@@ -1,3 +1,4 @@
+from uuid import UUID
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
 
@@ -15,8 +16,7 @@ router = APIRouter()
 )
 def get_all_post_job(username: str,
                      db: Session = Depends(get_db)):
-    db_jobs = crud.get_all_post_job(db, username)
-    return db_jobs
+    return crud.get_all_post_job(db, username)
 
 
 @router.post(
@@ -26,5 +26,20 @@ def get_all_post_job(username: str,
 def post_job(job: schemas.JobPostRequest,
              username: str,
              db: Session = Depends(get_db)):
-    db_job = crud.post_job(db, job, username)
-    return db_job
+    return crud.post_job(db, job, username)
+
+
+@router.patch(
+    "/change_job"
+)
+def change_job(job: schemas.JobPostResponse,
+               db: Session = Depends(get_db)):
+    return crud.change_job(db, job)
+
+
+@router.delete(
+    "/delete_job"
+)
+def delete_job(job_id: UUID,
+               db: Session = Depends(get_db)):
+    return crud.delete_job(db, job_id)

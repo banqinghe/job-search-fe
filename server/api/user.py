@@ -14,8 +14,7 @@ router = APIRouter()
 
 @router.post(
     "/login",
-    response_model=schemas.User,
-    status_code=200
+    response_model=schemas.User
 )
 def user_login(user: schemas.UserLogin,
                db: Session = Depends(get_db)):
@@ -28,8 +27,7 @@ def user_login(user: schemas.UserLogin,
 
 
 @router.post(
-    "/register",
-    status_code=200
+    "/register"
 )
 def user_register(user: schemas.UserRegister,
                   db: Session = Depends(get_db)):
@@ -42,8 +40,7 @@ def user_register(user: schemas.UserRegister,
 
 
 @router.patch(
-    "/change_password",
-    status_code=200
+    "/change_password"
 )
 def user_change_password(user: schemas.UserChangePassword,
                          db: Session = Depends(get_db)):
@@ -57,8 +54,7 @@ def user_change_password(user: schemas.UserChangePassword,
 
 @router.patch(
     "/update_info",
-    response_model=schemas.User,
-    status_code=200
+    response_model=schemas.User
 )
 def user_update_info(user: schemas.User,
                      db: Session = Depends(get_db)):

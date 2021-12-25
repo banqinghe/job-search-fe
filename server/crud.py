@@ -1,3 +1,4 @@
+from uuid import UUID
 from sqlalchemy.orm import Session
 
 import models
@@ -36,6 +37,10 @@ def change_password(db: Session, user: schemas.UserChangePassword):
     db.commit()
 
 
+def get_job_by_id(db: Session, id: UUID):
+    return db.query(models.JobPosition).filter(models.JobPosition.id == id).first()
+
+
 def get_all_post_job(db: Session, username: str):
     return db.query(models.JobPosition)\
         .filter(models.JobPosition.poster == username)\
@@ -48,3 +53,21 @@ def post_job(db: Session, job: schemas.JobPostRequest, username: str):
     db.commit()
     db.refresh(db_job)
     return db_job
+
+
+def change_job(db: Session, job: schemas.JobPostResponse):
+    db_job = get_job_by_id(db, job.id)
+
+    for key, value in job.dict().items():
+        if value:
+            setattr(db_job, key, value)
+
+    db.commit()
+    db.refresh(db_job)
+    return db_job
+
+
+def delete_job(db: Session, job_id: UUID):
+    db.query(models.JobPosition)\
+        .filter(models.JobPosition.id == job_id)\
+        .delete()
