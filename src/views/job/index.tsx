@@ -1,49 +1,108 @@
-import JobPositionCard from '@/components/JobPositionCard';
-import { JobPosition } from '@/models';
-import MockRecommendJobs from '@/mock/company/recommend-job-position.json';
-import { Tabs } from 'antd';
+import MockJobs from '@/mock/company/job-detail.json';
+import MockRecommendCompanies from '@/mock/company/recommend-company.json';
+import { Button, Tabs } from 'antd';
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { HomeOutlined, UserOutlined, FileOutlined } from '@ant-design/icons'
+import { Company } from '@/models';
+import ReactMarkdown from 'react-markdown';
 
-const {TabPane} = Tabs;
 function Job() {
+  const [collectLoading, setCollectLoading] = useState(false);
+  const [sendLoading, setSendLoading] = useState(false);
+  const params = useParams();
+  const id = parseInt(params.id ?? '-1', 10);
+  const job = MockJobs[id];
   
+  const [companyInfo, setCompanyInfo] = useState<Company | null>(null);
 
-    // console.log('basic info form -> onFinish:', {
-    //   jobType: values.jobType[values.jobType.length - 1],
-    //   jobTag: values.jobTag,
-    //   city: values.city[values.city.length - 1],
-    //   salaryRange: [values.minSalary, values.maxSalary],
-    //   userType: values.userType,
-    // });
-  // }
+  useEffect(() => {
+    (MockRecommendCompanies as Company[]).map(company => {
+      if (company.name === job.company){
+        setCompanyInfo(company)
+      }
+    })
+    document.title = job.title + '招聘';
+  }, [id])
 
   return (
-    // <div className="flex justify-center items-center w-full bg-blue-400">
-    //   {!infoCompleteness.account ? (
-    //     // 登录信息表单
-    //     <div className="w-4/12 border rounded-2xl px-20 pt-8 pb-12 bg-white" style={{ minWidth: 400 }}>
-    //       <h1 className="mb-8 text-center text-xl font-bold">填写用户基本信息</h1>
-    //       <RegisterForm form={registerForm} onFinish={handleSubmit} />
-    //       <Button type="primary" className="w-full" onClick={() => registerForm.submit()}>下一步</Button>
-    //     </div>
-    //   ) : (
-    //     // 基本求职信息表单
-    //     <div className="w-5/12 border rounded-2xl px-16 pt-8 pb-12 bg-white" style={{ minWidth: 540 }}>
-    //       <h1 className="mb-8 text-center text-xl font-bold">填写你的求职期望</h1>
-    //       <JobInfoForm form={infoForm} onFinish={handleSubmit} />
-    //       <Button type="primary" className="w-full" onClick={() => infoForm.submit()}>完成</Button>
-    //     </div>
-    //   )}
-    // </div>
-    <div className="flex flex-col w-full">
-      <Tabs defaultActiveKey="1" className="mx-20 mt-5">
-        <TabPane tab="热门职位" key="1">
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
-            {(MockRecommendJobs as JobPosition[]).map(jobInfo => (
-              <JobPositionCard key={jobInfo.id} jobInfo={jobInfo} />
-            ))}
+    <div className="flex flex-col w-full bg-gray-100">
+      <div className="flex justify-between mx-60">
+        <div className="flex flex-col space-y-5" style={{ minWidth: 350 }}>
+          <p className="mt-7 space-x-2">
+            <span className='text-2xl'>{job.title}</span>
+            <span className="text-blue-500 text-2xl font-bold">
+              {job.salaryRange[0]}k - {job.salaryRange[1]}k
+            </span>
+          </p>
+          <p className="space-x-2">
+              <span>{Array.isArray(job.location) ? job.location.join('、') : job.location} /</span>
+              <span>{job.experienceRequirement ?? '经验不限'} /</span>
+              <span>{job.educationRequirement ?? '学历不限'}</span>
+          </p>
+        </div>
+        <div className="flex items-end space-x-5">
+          <Button
+            className="flex items-center"
+            type="default"
+            loading={collectLoading}
+            onClick={() => {
+              console.log(params)
+              setCollectLoading(true)
+              setTimeout(() => setCollectLoading(false), 1000)
+            }}
+          >
+            收藏
+          </Button>
+          <Button
+            className="flex items-center"
+            type="primary"
+            loading={sendLoading}
+            onClick={() => {
+              setSendLoading(true)
+              setTimeout(() => setSendLoading(false), 1000)
+            }}
+          >
+            投递简历
+          </Button>
+        </div>
+      </div>
+      <div className="flex ml-60 mb-7" style={{ minWidth: 350 }}>
+        <p className="mt-5 space-x-5">
+          <span className="text-gray-600 text-base">{job.company}</span>
+          <span className="text-gray-400 text-sm">{job.postTime}</span>
+          <span className="text-gray-400 text-sm">发布于本网站</span>
+        </p>
+      </div>
+      
+      <div className="flex space-x-2 h-full">
+        <div className="flex-1 bg-white pl-60">
+          <ReactMarkdown className="markdown-body py-5 pr-12">{job.description}</ReactMarkdown>
+        </div>
+        <div className="flex flex-col items-start bg-white pr-24 pl-8 pt-6">
+          <div className="flex items-end space-x-5 cursor-pointer" style={{ minWidth: 200 }} onClick={() => open('/company/' + job.company, '_blank')}>
+            <img className="w-24 h-24 border border-gray-200" src={job.logoUrl} alt={job.company + ' logo'} />
+            <span className="text-lg">{job.company}</span>
           </div>
-        </TabPane>
-      </Tabs>
+          {companyInfo && (
+            <div className="space-y-4 mt-6" style={{ minWidth: 200 }}>
+              <p className="flex items-center space-x-2">
+                <HomeOutlined />
+                <a href={companyInfo.officialLink} target="_blank">公司官网</a>
+              </p>
+              <p className="flex items-center space-x-2">
+                <UserOutlined />
+                  <span>{'在招岗位 ' + companyInfo.jobNumber}</span>
+              </p>
+              <p className="flex items-center space-x-2">
+                <FileOutlined />
+                  <span>{'已收简历 ' + companyInfo.resumeNumber}</span>
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+      
     </div>
   );
 }

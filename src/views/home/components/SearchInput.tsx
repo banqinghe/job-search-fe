@@ -4,23 +4,25 @@ import { UserOutlined, LockOutlined, UnlockOutlined, MailOutlined } from '@ant-d
 interface SearchInputProps {
   className?: string;
   style?: React.CSSProperties;
+  placeholder?: string;
 //   form: FormInstance;
 //   onFinish: (values: any) => void;
 //   onFinishFailed?: (errInfo: any) => void;
 }
 
-function RegisterForm(props: SearchInputProps) {
+function SearchInput(props: SearchInputProps) {
   const {
     className = '',
-    style
+    style,
+    placeholder = '请输入查询条件'
   } = props;
 
   return (
     <div className={className + ' flex'} style={style}>
-      <Input className="flex-1" placeholder="搜索职位或公司" />
+      <Input className="flex-1" placeholder={placeholder} />
       <Button type="primary">搜索</Button>
     </div>   
   );
 }
 
-export default RegisterForm;
+export default SearchInput;

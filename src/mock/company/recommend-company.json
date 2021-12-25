@@ -3,7 +3,7 @@
     "name": "字节滚动",
     "description": "颤音软件开发公司，巴拉巴拉字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁",
     "logoUrl": "/src/assets/logo/one.jpg",
-    "officialLink": "www.bytedance.com",
+    "officialLink": "https://www.bytedance.com",
     "location": "上海",
     "jobNumber": 5,
     "resumeNumber": 6
@@ -12,7 +12,7 @@
     "name": "阿狸叭叭",
     "description": "天狗阿狸云开发公司，巴拉巴拉字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁",
     "logoUrl": "/src/assets/logo/two.jpg",
-    "officialLink": "www.alibaba.com",
+    "officialLink": "https://www.alibaba.com",
     "location": ["上海","北京"],
     "jobNumber": 5,
     "resumeNumber": 8
@@ -21,7 +21,7 @@
     "name": "没团",
     "description": "外卖公司，巴拉巴拉字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁",
     "logoUrl": "/src/assets/logo/four.jpg",
-    "officialLink": "www.meituan.com",
+    "officialLink": "https://www.meituan.com",
     "location": "呼伦贝尔",
     "jobNumber": 5,
     "resumeNumber": 9
@@ -30,7 +30,7 @@
     "name": "疼迅",
     "description": "秋秋软件开发公司，巴拉巴拉字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁字数补丁",
     "logoUrl": "/src/assets/logo/three.jpg",
-    "officialLink": "www.tencent.com",
+    "officialLink": "https://www.tencent.com",
     "location": ["北京","上海"],
     "jobNumber": 5,
     "resumeNumber": 11

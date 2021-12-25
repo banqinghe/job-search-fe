@@ -46,8 +46,8 @@ function Header(props: HeaderProps) {
         <div className="ml-10">
           <ul className="flex space-x-4">
             <li><Link to="/">首页</Link></li>
-            <li><Link to="/job">职位</Link></li>
-            <li><Link to="/company">公司</Link></li>
+            <li><Link to="/jobs">职位</Link></li>
+            <li><Link to="/companies">公司</Link></li>
           </ul>
         </div>
       </div>

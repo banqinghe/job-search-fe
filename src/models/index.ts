@@ -130,6 +130,13 @@ export interface Company {
   resumeNumber: number;
 }
 
+export interface CompanyDetail extends Company {
+  /**
+   * 公司详情
+   */
+  detail: string;
+}
+
 /**
  * 职位信息
  */
@@ -190,6 +197,16 @@ export interface JobPositionDetail extends JobPosition {
    * 职位描述
    */
   description: string;
+
+  /**
+   * 是否收藏
+   */
+   collected: boolean;
+
+   /**
+   * 是否投递
+   */
+  resumed: boolean;
 }
 
 /**

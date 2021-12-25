@@ -17,8 +17,6 @@ function JobPositionCard(props: JobPositionCardProps) {
     onClick,
   } = props;
 
-  const navigate = useNavigate();
-  const hostname = window.location.host;
   
   return (
     <div

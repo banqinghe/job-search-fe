@@ -7,7 +7,9 @@ interface CompanyCardProps {
   className?: string;
   style?: React.CSSProperties;
   companyInfo: Company;
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  CardClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  JobClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  ResumeClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 } 
 
 function CompanyCard(props: CompanyCardProps) {
@@ -15,11 +17,11 @@ function CompanyCard(props: CompanyCardProps) {
     className = '',
     style,
     companyInfo,
-    onClick,
+    CardClick,
+    JobClick,
+    ResumeClick
   } = props;
 
-  const navigate = useNavigate();
-  const hostname = window.location.host;
   
   return (
     <div
@@ -30,7 +32,7 @@ function CompanyCard(props: CompanyCardProps) {
     >
       <div className="flex flex-col items-center cursor-pointer"
         // TODO: 点击跳转至相应公司详情页
-        onClick={onClick ?? (() => console.log('Click Job Card'))}
+        onClick={CardClick ?? (() => console.log('Click Company Card'))}
       >
         <img className="w-24 h-24" src={companyInfo.logoUrl} alt={companyInfo.name + ' logo'} />
         <h2 className="text-lg mt-2">
@@ -44,7 +46,9 @@ function CompanyCard(props: CompanyCardProps) {
         </Tooltip>
       </div>
       <div className="flex divide-x divide-dotted divide-gray-200">
-        <div className="flex-1 flex-col cursor-pointer">
+        <div className="flex-1 flex-col cursor-pointer"
+          onClick={JobClick ?? (() => console.log('Click JobNumber'))}
+        >
           <p className="text-center m-2 text-green-500">
             {companyInfo.jobNumber}
           </p>
@@ -52,7 +56,9 @@ function CompanyCard(props: CompanyCardProps) {
             在招职位
           </p>
         </div>
-        <div className="flex-1 flex-col">
+        <div className="flex-1 flex-col cursor-pointer"
+          onClick={ResumeClick ?? (() => console.log('Click ResumeNumber'))}
+        >
           <p className="text-center m-2 text-green-500">
             {companyInfo.resumeNumber}
           </p>

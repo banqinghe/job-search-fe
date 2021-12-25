@@ -66,6 +66,13 @@ npm run dev
         jobNumber:      number;             // 在招职位数
         resumeNumber:   number;             // 投递简历数
     }
+    /**
+     * 公司详细信息
+     * 相比 Comapny 多了 detail 字段
+     */
+    export interface CompanyDetail extends Company {
+      detail: string; // 公司描述, 要求等, markdown 文本格式
+    }
     
     /**
      * 职位信息
@@ -75,36 +82,38 @@ npm run dev
         id:                     string;             // 职位 ID, 职位唯一标识
         postTime:               string;             // 发布时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
         location:               string | string[];  // 工作地点
-        experienceRequirement?: string;             // 经验要求 (可选), 若为空则表示不限
+    experienceRequirement?: string;             // 经验要求 (可选), 若为空则表示不限
         educationRequirement?:  string;             // 学历要求 (可选), 若为空则表示不限
         salaryRange:            number[];           // 薪资范围, 与 JobHunterInfo 中 salaryRange 格式相同
         company:                string;             // 公司名称
         department:             string;             // 职位所在部门
         logoUrl:                string;             // 公司 Logo 链接
     }
-
+    
     /**
      * 职位详细信息
-     * 相比 JobPosition 多了 detail 字段
+     * 相比 JobPosition 多了 detail、collected、resumed 字段
      */
     export interface JobPositionDetail {
-        detail: string; // 职位描述, 要求等, markdown 文本格式
+        detail: string;         // 职位描述, 要求等, markdown 文本格式
+        collected: boolean;     // 是否收藏
+        resumed: boolean;       //是否已投递
     }
-
+    
     /**
      * 用户投递信息
      */
     export interface JobRecord {
         title:      string;             // 职位名称
         id:         string;             // 职位 ID
-        postTime:   string;             // 发布时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
+    postTime:   string;             // 发布时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
         sendTime:   string;             // 投递时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
         company:    string;             // 公司名称
         department: string;             // 职位所在部门
         location:   string | string[];  // 工作地点
         status:     'read' | 'unread';  // 当前状态, 区分简历是否被对应 recruiter 下载
     }
-
+    
     /**
      * 接受简历投递记录信息
      */
@@ -431,6 +440,137 @@ npm run dev
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
 | recordId | string | 记录 ID |
+
+**Response**
+
+只需返回成功或失败
+
+#### 获取推荐公司
+
+| 说明                                                     | 请求路径       |
+| -------------------------------------------------------- | -------------- |
+| 获取推荐给当前用户的职位信息 | /user/recommend_companies |
+
+**Request**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| username | string | |
+
+**Response**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| recommendCompanyList | Company[] | 推荐职位列表 |
+
+`Company` 类型见 **FE Entry Modal**
+
+#### 获取某一职位
+
+| 说明                                                     | 请求路径       |
+| -------------------------------------------------------- | -------------- |
+| 具体的某一职位信息 | /job/get_one |
+
+**Request**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| jobId | string | 职位 ID |
+
+**Response**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| jobPositionDetail | JobPositionDetail | 获取职位详细信息用于展示 |
+
+#### 搜索职位
+
+| 说明                                                     | 请求路径       |
+| -------------------------------------------------------- | -------------- |
+| 根据职位 ID 或是 职位名称做模糊查询  | /job/search_job |
+
+**Request**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| query_condition | string | |
+| pageSize | number | 页大小 |
+| pageNumber | number | 页号, 从 1 开始 |
+
+**Response**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| jobPostionList | JobPosition[] | 接受岗位列表 |
+| count | number | 记录总条数, 用于分页展示 |
+
+#### 搜索公司
+
+| 说明                                                     | 请求路径       |
+| -------------------------------------------------------- | -------------- |
+| 根据公司名称获取一个最相关的  | /company/search_company |
+
+**Request**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| query_condition | string | |
+
+**Response**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| Company | Company | 可以为空 |
+
+
+#### 获取某一公司
+
+| 说明                                                     | 请求路径       |
+| -------------------------------------------------------- | -------------- |
+| 具体的某一公司信息 | /company/get_one |
+
+**Request**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| name | string | 公司名称 |
+
+**Response**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| companyDetail | CompanyDetail | 获取公司详细信息用于展示 |
+
+
+#### 收藏某职位
+
+| 说明                                                     | 请求路径       |
+| -------------------------------------------------------- | -------------- |
+| 某求职者收藏某职位 | /job/collect |
+
+**Request**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| username | string | |
+| jobId | string | 职位 ID |
+
+**Response**
+
+只需返回成功或失败
+
+#### 向某职位投递简历
+
+| 说明                                                     | 请求路径       |
+| -------------------------------------------------------- | -------------- |
+| 某求职者投递简历给某职位 | /job/resume |
+
+**Request**
+
+| 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
+| username | string | |
+| jobId | string | 职位 ID |
 
 **Response**
 
