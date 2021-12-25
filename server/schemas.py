@@ -61,7 +61,7 @@ class JobPostRequest(BaseModel):
     salaryRange: Optional[List[int]]
     company: str
     department: str
-    detail: str
+    description: str
 
 
 class JobPostResponse(JobPostRequest):

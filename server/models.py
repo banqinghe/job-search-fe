@@ -50,7 +50,7 @@ class JobPosition(Base):
     department = Column(String)
     # FIXME
     logoUrl = Column(String, default="no url")
-    detail = Column(String)
+    description = Column(String)
 
 
 class JobRecord(Base):

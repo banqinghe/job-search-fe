@@ -71,7 +71,7 @@ npm run dev
      * 相比 Comapny 多了 detail 字段
      */
     export interface CompanyDetail extends Company {
-      detail: string; // 公司描述, 要求等, markdown 文本格式
+      description: string; // 公司描述, 要求等, markdown 文本格式
     }
     
     /**
@@ -95,7 +95,7 @@ npm run dev
      * 相比 JobPosition 多了 detail、collected、resumed 字段
      */
     export interface JobPositionDetail {
-        detail: string;         // 职位描述, 要求等, markdown 文本格式
+        description: string;         // 职位描述, 要求等, markdown 文本格式
         collected: boolean;     // 是否收藏
         resumed: boolean;       //是否已投递
     }
