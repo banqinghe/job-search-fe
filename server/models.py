@@ -57,7 +57,8 @@ class JobRecord(Base):
     __tablename__ = "job_records"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    candidateName = Column(UUID(as_uuid=True))
+    username = Column(String)
+
     jobId = Column(UUID(as_uuid=True))
     sendTime = Column(DateTime, server_default=func.now())
     status = Column(String, default="unread")

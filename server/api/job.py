@@ -78,3 +78,23 @@ def change_resume_status(
         recordId: UUID,
         db: Session = Depends(get_db)):
     return crud.change_resume_status(db, recordId)
+
+
+@router.get(
+    "/get_all_resume_receive"
+)
+def get_recuiter_records(
+        username: str,
+        pageSize: int,
+        pageNumber: int,
+        db: Session = Depends(get_db)):
+    return crud.get_recruiter_records(db, username, pageSize, pageNumber)
+
+
+@router.get(
+    "/job_records"
+)
+def get_candidate_records(
+        username: str,
+        db: Session = Depends(get_db)):
+    return crud.get_candidate_records(db, username)

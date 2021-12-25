@@ -74,20 +74,20 @@ class JobPostResponse(JobPostRequest):
         orm_mode = True
 
 
-class CandidateJobRecord():
+class CandidateJobRecord(BaseModel):
     title: str
-    id: str
-    postTime: str
-    sendTime: str
+    id: UUID
+    postTime: datetime
+    sendTime: datetime
     company: str
     department: str
     location: List[str]
     status: str
 
 
-class RecruiterJobRecord():
-    recordId: str
-    jobId: str
+class RecruiterJobRecord(BaseModel):
+    recordId: UUID
+    jobId: UUID
     jobTitle: str
     candidateName: str
     candidateEducation: str

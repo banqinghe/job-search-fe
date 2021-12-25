@@ -85,8 +85,8 @@ def collect_job(db: Session, job_id: UUID, username: str):
 
 def apply_job(db: Session, job_id: UUID, username: str):
     db_job_record = models.JobRecord(
-        candidateName=username,
-        job_id=job_id,
+        username=username,
+        jobId=job_id,
     )
     db.add(db_job_record)
     db.commit()
@@ -96,3 +96,52 @@ def change_resume_status(db: Session, recordId: UUID):
     db_job_record = get_record_by_id(db, recordId)
     db_job_record.status = "read"
     db.commit()
+
+
+def get_recruiter_records(db: Session, username: str, pageSize: int, pageNumber: int):
+    db_job_records = db.query(models.JobRecord)\
+        .join(models.JobPosition, models.JobRecord.jobId == models.JobPosition.id)\
+        .filter(models.JobPosition.poster == username)\
+        .offset(pageSize * (pageNumber - 1))\
+        .limit(pageSize)\
+        .all()
+    recuiter_records = []
+    for db_job_record in db_job_records:
+        db_job = get_job_by_id(db, db_job_record.jobId)
+        db_user = get_user_by_username(db, db_job_record.username)
+        recuiter_records.append(
+            schemas.RecruiterJobRecord(
+                recordId=db_job_record.id,
+                jobId=db_job.id,
+                jobTitle=db_job.title,
+                candidateName=db_user.name,
+                candidateEducation=db_user.education,
+                candidatePhoneNumber=db_user.phoneNumber,
+                candidateEmail=db_user.email,
+                resumeUrl=db_user.resumeUrl,
+                status=db_job_record.status
+            )
+        )
+    return recuiter_records
+
+
+def get_candidate_records(db: Session, username: str):
+    db_job_records = db.query(models.JobRecord)\
+        .filter(models.JobRecord.username == username)\
+        .all()
+    candidate_records = []
+    for db_job_record in db_job_records:
+        db_job = get_job_by_id(db, db_job_record.jobId)
+        candidate_records.append(
+            schemas.CandidateJobRecord(
+                title=db_job.title,
+                id=db_job.id,
+                postTime=db_job.postTime,
+                sendTime=db_job_record.sendTime,
+                company=db_job.company,
+                department=db_job.department,
+                location=db_job.location,
+                status=db_job_record.status
+            )
+        )
+    return candidate_records
