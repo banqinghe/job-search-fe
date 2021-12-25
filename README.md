@@ -82,7 +82,7 @@ npm run dev
         id:                     string;             // 职位 ID, 职位唯一标识
         postTime:               string;             // 发布时间 (UTC+8), 约定格式为 YYYY-MM-dd HH:mm
         location:               string | string[];  // 工作地点
-    experienceRequirement?: string;             // 经验要求 (可选), 若为空则表示不限
+        experienceRequirement?: string;             // 经验要求 (可选), 若为空则表示不限
         educationRequirement?:  string;             // 学历要求 (可选), 若为空则表示不限
         salaryRange:            number[];           // 薪资范围, 与 JobHunterInfo 中 salaryRange 格式相同
         company:                string;             // 公司名称

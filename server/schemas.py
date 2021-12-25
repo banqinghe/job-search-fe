@@ -57,7 +57,7 @@ class JobPostRequest(BaseModel):
     title: str
     location: list[str]
     experienceRequirement: Optional[str]
-    educationRequiretment: Optional[str]
+    educationRequirement: Optional[str]
     salaryRange: Optional[List[int]]
     company: str
     department: str
