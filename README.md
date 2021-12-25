@@ -21,7 +21,7 @@ npm run dev
      */
     export interface UserInfo {
         username:       string;     // 用户名, 用户的唯一标识
-        role:           Role;       // 用户角色, 区分为未登录 (not_logged), 求职者 (job_hunter), 招聘者 (recruiter) 三种
+        role:           Role;       // 用户角色, 区分为未登录 (notLogged), 求职者 (jobHunter), 招聘者 (recruiter) 三种
         name:           string;     // 真实姓名
         phoneNumber:    string;     // 电话号码
         email:          string;     // 邮箱地址
@@ -141,7 +141,7 @@ npm run dev
 | 属性名称    | 属性类型 | 备注                                                |
 | ----------- | -------- | --------------------------------------------------- |
 | username    | string   | 用户名                                       |
-| role        | string   | 用户角色, 求职者 (job_hunter) 或 招聘者 (recruiter) |
+| role        | string   | 用户角色, 求职者 (jobHunter) 或 招聘者 (recruiter) |
 | name        | string   | 用户姓名                                      |
 | phoneNumber | string   | 电话号码                                      |
 | email       | string   | 电子邮箱                                      |
@@ -176,7 +176,7 @@ npm run dev
 | name | string | 用户姓名 |
 | phoneNumber | string | 电话号码 |
 | email | string | 电子邮箱 |
-| role | string | 用户类型, 求职者 (job_hunter) 或招聘者 (recruiter) |
+| role | string | 用户类型, 求职者 (jobHunter) 或招聘者 (recruiter) |
 
 **Response**
 
@@ -193,8 +193,8 @@ npm run dev
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
 | username | string | |
-| prev_password | string | 账户旧密码, 若密码验证不通过则请求错误 |
-| new_password | string | 新密码 |
+| prevPassword | string | 账户旧密码, 若密码验证不通过则请求错误 |
+| newPassword | string | 新密码 |
 
 **Response**
 
@@ -211,7 +211,9 @@ npm run dev
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
 | username | string | |
+| name | string | |
 | phoneNumber | string | |
+| role | Role | |
 | email | string | |
 | jobType | string | |
 | jobTag | string[] | |
@@ -226,45 +228,23 @@ npm run dev
 
 更改成功后返回新的用户信息, 格式同 `/user/login` response
 
-#### 头像上传
+#### 文件上传（简历、头像）
 
 | 说明                                                     | 请求路径       |
 | -------------------------------------------------------- | -------------- |
-| 上传用户头像文件, 返回图片静态链接 | /user/upload_avatar |
+| 上传文件, 返回静态链接 | /user/upload_file |
 
 **Request**
 
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
-| username | string | |
-| avatar | File | 头像图片文件 |
+| file | File | |
 
 **Response**
 
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
-| avatarUrl | string | 头像静态链接 |
-
-#### 简历上传
-
-| 说明                                                     | 请求路径       |
-| -------------------------------------------------------- | -------------- |
-| 上传用户简历文件, 返回简历静态链接 | /user/upload_resume |
-
-实现与头像上传基本相同
-
-**Request**
-
-| 属性名称 | 属性类型 | 备注 |
-| ------- | -------- | ---- |
-| username | string | |
-| resume | File | 简历文件 (PDF) |
-
-**Response**
-
-| 属性名称 | 属性类型 | 备注 |
-| ------- | -------- | ---- |
-| resumeUrl | string | 简历文件静态链接 |
+| url | string | 头像静态链接 |
 
 #### 获取推荐职位
 
@@ -360,13 +340,14 @@ npm run dev
 **Response**
 
 | 属性名称 | 属性类型 | 备注 |
+| ------- | -------- | ---- |
 | jobPositionDetail | JobPositionDetail | 成功后返回完整职位信息, 用于回填如表格 |
 
 #### 修改发布的职位
 
 | 说明                                                     | 请求路径       |
 | -------------------------------------------------------- | -------------- |
-| 发布新的职位 | /job/change_job |
+| 更改已发布职位 | /job/change_job |
 
 **Request**
 
@@ -382,7 +363,7 @@ npm run dev
 
 | 说明                                                     | 请求路径       |
 | -------------------------------------------------------- | -------------- |
-| 发布新的职位 | /job/delete_job |
+| 删除已发布职位 | /job/delete_job |
 
 **Request**
 
