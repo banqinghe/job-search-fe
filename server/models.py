@@ -1,5 +1,7 @@
 import uuid
 from sqlalchemy import Column, Integer, String, ARRAY, DateTime
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.sql import func
 
 
 from database import Base
@@ -36,27 +38,28 @@ class User(Base):
 class JobPosition(Base):
     __tablename__ = "job_positions"
 
-    id = Column(String, primary_key=True, default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     poster = Column(String)
     title = Column(String)
-    postTime = Column(DateTime)
+    postTime = Column(DateTime, server_default=func.now())
     location = Column(String)
     experienceRequirement = Column(String)
     educationRequiretment = Column(String)
     salaryRange = Column(ARRAY(Integer))
     company = Column(String)
     department = Column(String)
-    logoUrl = Column(String)
+    # FIXME
+    logoUrl = Column(String, default="no url")
     detail = Column(String)
 
 
 class JobRecord(Base):
     __tablename__ = "job_records"
 
-    id = Column(String, primary_key=True, default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     jobId = Column(String)
     title = Column(String)
-    sendTime = Column(DateTime)
+    sendTime = Column(DateTime, server_default=func.now())
     company = Column(String)
     department = Column(String)
     location = Column(String)
@@ -66,7 +69,7 @@ class JobRecord(Base):
 class ResumeReceiveRecord(Base):
     __tablename__ = "resume_receive_records"
 
-    id = Column(String, primary_key=True, default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     jobId = Column(String)
     recordId = Column(String)
     jobTitle = Column(String)
@@ -74,5 +77,3 @@ class ResumeReceiveRecord(Base):
     candidateEducation = Column(String)
     candidatePhoneNumber = Column(String)
     candidateEmail = Column(String)
-    resumeUrl = Column(String)
-    status = Column(String)

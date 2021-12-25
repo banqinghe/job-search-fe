@@ -25,6 +25,7 @@ def update_user(db: Session, user: schemas.User):
 
     db.commit()
     db.refresh(db_user)
+    return db_user
 
 
 def change_password(db: Session, user: schemas.UserChangePassword):
@@ -39,3 +40,11 @@ def get_all_post_job(db: Session, username: str):
     return db.query(models.JobPosition)\
         .filter(models.JobPosition.poster == username)\
         .all()
+
+
+def post_job(db: Session, job: schemas.JobPostRequest, username: str):
+    db_job = models.JobPosition(**job.dict(), poster=username)
+    db.add(db_job)
+    db.commit()
+    db.refresh(db_job)
+    return db_job

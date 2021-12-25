@@ -1,3 +1,4 @@
+from uuid import UUID
 from typing import Optional, List, Union
 from datetime import datetime
 from enum import Enum
@@ -52,13 +53,22 @@ class UserChangePassword(UserBase):
     newPassword: str
 
 
-class jobPosition(BaseModel):
-    id: str
+class JobPostRequest(BaseModel):
     title: str
-    postTime: datetime
+    location: str
     experienceRequirement: Optional[str]
     educationRequiretment: Optional[str]
     salaryRange: Optional[List[int]]
     company: str
     department: str
+    detail: str
+
+
+class JobPostResponse(JobPostRequest):
+    id: UUID
+    poster: str
+    postTime: datetime
     logoUrl: str
+
+    class Config:
+        orm_mode = True
