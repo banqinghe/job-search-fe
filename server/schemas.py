@@ -55,7 +55,7 @@ class UserChangePassword(UserBase):
 
 class JobPostRequest(BaseModel):
     title: str
-    location: str
+    location: list[str]
     experienceRequirement: Optional[str]
     educationRequiretment: Optional[str]
     salaryRange: Optional[List[int]]
@@ -72,3 +72,26 @@ class JobPostResponse(JobPostRequest):
 
     class Config:
         orm_mode = True
+
+
+class CandidateJobRecord():
+    title: str
+    id: str
+    postTime: str
+    sendTime: str
+    company: str
+    department: str
+    location: List[str]
+    status: str
+
+
+class RecruiterJobRecord():
+    recordId: str
+    jobId: str
+    jobTitle: str
+    candidateName: str
+    candidateEducation: str
+    candidatePhoneNumber: str
+    candidateEmail: str
+    resumeUrl: str
+    status: str

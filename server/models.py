@@ -42,9 +42,9 @@ class JobPosition(Base):
     poster = Column(String)
     title = Column(String)
     postTime = Column(DateTime, server_default=func.now())
-    location = Column(String)
+    location = Column(ARRAY(String))
     experienceRequirement = Column(String)
-    educationRequiretment = Column(String)
+    educationRequirement = Column(String)
     salaryRange = Column(ARRAY(Integer))
     company = Column(String)
     department = Column(String)
@@ -57,23 +57,7 @@ class JobRecord(Base):
     __tablename__ = "job_records"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    jobId = Column(String)
-    title = Column(String)
+    candidateName = Column(UUID(as_uuid=True))
+    jobId = Column(UUID(as_uuid=True))
     sendTime = Column(DateTime, server_default=func.now())
-    company = Column(String)
-    department = Column(String)
-    location = Column(String)
-    status = Column(String)
-
-
-class ResumeReceiveRecord(Base):
-    __tablename__ = "resume_receive_records"
-
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    jobId = Column(String)
-    recordId = Column(String)
-    jobTitle = Column(String)
-    candidateName = Column(String)
-    candidateEducation = Column(String)
-    candidatePhoneNumber = Column(String)
-    candidateEmail = Column(String)
+    status = Column(String, default="unread")

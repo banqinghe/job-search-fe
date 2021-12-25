@@ -41,6 +41,10 @@ def get_job_by_id(db: Session, id: UUID):
     return db.query(models.JobPosition).filter(models.JobPosition.id == id).first()
 
 
+def get_record_by_id(db: Session, id: UUID):
+    return db.query(models.JobRecord).filter(models.JobRecord.id == id).first()
+
+
 def get_all_post_job(db: Session, username: str):
     return db.query(models.JobPosition)\
         .filter(models.JobPosition.poster == username)\
@@ -71,3 +75,24 @@ def delete_job(db: Session, job_id: UUID):
     db.query(models.JobPosition)\
         .filter(models.JobPosition.id == job_id)\
         .delete()
+
+
+def collect_job(db: Session, job_id: UUID, username: str):
+    db_user = get_user_by_username(db, username)
+    db_user.jobStars.append(job_id)
+    db_user.commit()
+
+
+def apply_job(db: Session, job_id: UUID, username: str):
+    db_job_record = models.JobRecord(
+        candidateName=username,
+        job_id=job_id,
+    )
+    db.add(db_job_record)
+    db.commit()
+
+
+def change_resume_status(db: Session, recordId: UUID):
+    db_job_record = get_record_by_id(db, recordId)
+    db_job_record.status = "read"
+    db.commit()
