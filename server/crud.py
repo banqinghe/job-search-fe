@@ -24,6 +24,8 @@ def update_user(db: Session, user: schemas.User):
             setattr(db_user, key, value)
 
     db.commit()
+    db.refresh(db_user)
+    return db_user
 
 
 def change_password(db: Session, user: schemas.UserChangePassword):
