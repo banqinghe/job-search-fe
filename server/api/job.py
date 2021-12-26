@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
@@ -83,7 +84,7 @@ def change_resume_status(
 @router.get(
     "/get_all_resume_receive"
 )
-def get_recuiter_records(
+def get_recruiter_records(
         username: str,
         pageSize: int,
         pageNumber: int,
@@ -98,3 +99,16 @@ def get_candidate_records(
         username: str,
         db: Session = Depends(get_db)):
     return crud.get_candidate_records(db, username)
+
+
+@router.get(
+    "/search_resume_receive"
+)
+def search_recruiter_records(
+        pageSize: int,
+        pageNumber: int,
+        username: str,
+        jobTitle: Optional[str] = None,
+        candidateName: Optional[str] = None,
+        db: Session = Depends(get_db)):
+    return crud.search_recruiter_records(db, username, jobTitle, candidateName, pageSize, pageNumber)

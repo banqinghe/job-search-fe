@@ -416,7 +416,6 @@ npm run dev
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
 | username | string | |
-| jobId | string | 职位 ID |
 | jobTitle | string | 职位名称 |
 | candidateName | string | 候选人姓名 |
 | pageSize | number | 页大小 |

@@ -1,4 +1,6 @@
+from typing import Optional
 from uuid import UUID
+from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
 import models
@@ -75,6 +77,7 @@ def delete_job(db: Session, job_id: UUID):
     db.query(models.JobPosition)\
         .filter(models.JobPosition.id == job_id)\
         .delete()
+    db.commit()
 
 
 def collect_job(db: Session, job_id: UUID, username: str):
@@ -98,18 +101,12 @@ def change_resume_status(db: Session, recordId: UUID):
     db.commit()
 
 
-def get_recruiter_records(db: Session, username: str, pageSize: int, pageNumber: int):
-    db_job_records = db.query(models.JobRecord)\
-        .join(models.JobPosition, models.JobRecord.jobId == models.JobPosition.id)\
-        .filter(models.JobPosition.poster == username)\
-        .offset(pageSize * (pageNumber - 1))\
-        .limit(pageSize)\
-        .all()
-    recuiter_records = []
+def recruiter_records_from_db(db, db_job_records: models.JobRecord):
+    recruiter_records = []
     for db_job_record in db_job_records:
         db_job = get_job_by_id(db, db_job_record.jobId)
         db_user = get_user_by_username(db, db_job_record.username)
-        recuiter_records.append(
+        recruiter_records.append(
             schemas.RecruiterJobRecord(
                 recordId=db_job_record.id,
                 jobId=db_job.id,
@@ -122,13 +119,10 @@ def get_recruiter_records(db: Session, username: str, pageSize: int, pageNumber:
                 status=db_job_record.status
             )
         )
-    return recuiter_records
+    return recruiter_records
 
 
-def get_candidate_records(db: Session, username: str):
-    db_job_records = db.query(models.JobRecord)\
-        .filter(models.JobRecord.username == username)\
-        .all()
+def candidate_records_from_db(db, db_job_records: models.JobRecord):
     candidate_records = []
     for db_job_record in db_job_records:
         db_job = get_job_by_id(db, db_job_record.jobId)
@@ -145,3 +139,41 @@ def get_candidate_records(db: Session, username: str):
             )
         )
     return candidate_records
+
+
+def get_recruiter_records(db: Session, username: str, pageSize: int, pageNumber: int):
+    db_job_records = db.query(models.JobRecord)\
+        .join(models.JobPosition, models.JobRecord.jobId == models.JobPosition.id)\
+        .filter(models.JobPosition.poster == username)\
+        .offset(pageSize * (pageNumber - 1))\
+        .limit(pageSize)\
+        .all()
+
+    return recruiter_records_from_db(db, db_job_records)
+
+
+def get_candidate_records(db: Session, username: str):
+    db_job_records = db.query(models.JobRecord)\
+        .filter(models.JobRecord.username == username)\
+        .all()
+    return candidate_records_from_db(db, db_job_records)
+
+
+def search_recruiter_records(db: Session, username: str, jobTitle: Optional[str],
+                             candidateName: Optional[str], pageSize: int, pageNumber: int):
+    queries = []
+    if jobTitle:
+        queries.append(models.JobPosition.title.like(f"%{jobTitle}%"))
+    if candidateName:
+        queries.append(models.User.name.like(f"%{candidateName}%"))
+
+    db_job_records = db.query(models.JobRecord)\
+        .join(models.JobPosition, models.JobPosition.id == models.JobRecord.jobId)\
+        .join(models.User, models.User.username == models.JobRecord.username)\
+        .filter(models.JobPosition.poster == username)\
+        .filter(and_(queries))\
+        .offset(pageSize * (pageNumber - 1))\
+        .limit(pageSize)\
+        .all()
+
+    return recruiter_records_from_db(db, db_job_records)
