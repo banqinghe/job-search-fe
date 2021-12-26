@@ -266,6 +266,7 @@ npm run dev
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
 | username | string | |
+| count | number |
 
 **Response**
 
@@ -455,6 +456,7 @@ npm run dev
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
 | username | string | |
+| count | number | |
 
 **Response**
 

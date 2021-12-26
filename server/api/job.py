@@ -112,3 +112,13 @@ def search_recruiter_records(
         candidateName: Optional[str] = None,
         db: Session = Depends(get_db)):
     return crud.search_recruiter_records(db, username, jobTitle, candidateName, pageSize, pageNumber)
+
+
+@router.get(
+    "/recommend_jobs"
+)
+def recommend_jobs(
+        username: str,
+        count: int,
+        db: Session = Depends(get_db)):
+    return crud.recommend_jobs(db, username, count)

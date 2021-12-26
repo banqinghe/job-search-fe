@@ -2,6 +2,7 @@ from typing import Optional
 from uuid import UUID
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
 
 import models
 import schemas
@@ -171,9 +172,17 @@ def search_recruiter_records(db: Session, username: str, jobTitle: Optional[str]
         .join(models.JobPosition, models.JobPosition.id == models.JobRecord.jobId)\
         .join(models.User, models.User.username == models.JobRecord.username)\
         .filter(models.JobPosition.poster == username)\
-        .filter(and_(queries))\
+        .filter(and_(*queries))\
         .offset(pageSize * (pageNumber - 1))\
         .limit(pageSize)\
         .all()
 
     return recruiter_records_from_db(db, db_job_records)
+
+
+def recommend_jobs(db: Session, username: str, count: int):
+    return db.query(models.JobPosition)\
+        .filter(models.JobPosition.poster == username)\
+        .order_by(func.random())\
+        .limit(count)\
+        .all()
