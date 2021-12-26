@@ -62,3 +62,15 @@ class JobRecord(Base):
     jobId = Column(UUID(as_uuid=True))
     sendTime = Column(DateTime, server_default=func.now())
     status = Column(String, default="unread")
+
+
+class Company(Base):
+    __tablename__ = "companies"
+
+    name = Column(String, primary_key=True)
+    description = Column(String)
+    logoUrl = Column(String)
+    officialLink = Column(String)
+    jobNumber = Column(String)
+    resumeNumber = Column(String)
+    detail = Column(String)

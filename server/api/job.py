@@ -82,7 +82,8 @@ def change_resume_status(
 
 
 @router.get(
-    "/get_all_resume_receive"
+    "/get_all_resume_receive",
+    response_model=list[schemas.RecruiterJobRecord]
 )
 def get_recruiter_records(
         username: str,
@@ -93,7 +94,8 @@ def get_recruiter_records(
 
 
 @router.get(
-    "/job_records"
+    "/job_records",
+    response_model=list[schemas.CandidateJobRecord]
 )
 def get_candidate_records(
         username: str,
@@ -102,7 +104,8 @@ def get_candidate_records(
 
 
 @router.get(
-    "/search_resume_receive"
+    "/search_resume_receive",
+    response_model=list[schemas.RecruiterJobRecord]
 )
 def search_recruiter_records(
         pageSize: int,
@@ -115,10 +118,23 @@ def search_recruiter_records(
 
 
 @router.get(
-    "/recommend_jobs"
+    "/recommend_jobs",
+    response_model=list[schemas.JobPostResponse]
 )
 def recommend_jobs(
         username: str,
         count: int,
         db: Session = Depends(get_db)):
     return crud.recommend_jobs(db, username, count)
+
+
+@router.get(
+    "/search_job",
+    response_model=list[schemas.JobPostResponse]
+)
+def search_job(
+        title: str,
+        pageSize: int,
+        pageNumber: int,
+        db: Session = Depends(get_db)):
+    return crud.search_job(db, title, pageSize, pageNumber)

@@ -182,7 +182,29 @@ def search_recruiter_records(db: Session, username: str, jobTitle: Optional[str]
 
 def recommend_jobs(db: Session, username: str, count: int):
     return db.query(models.JobPosition)\
-        .filter(models.JobPosition.poster == username)\
         .order_by(func.random())\
         .limit(count)\
+        .all()
+
+
+def recommend_companies(db: Session, username: str, count: int):
+    return db.query(models.Company)\
+        .order_by(func.random())\
+        .limit(count)\
+        .all()
+
+
+def get_company_by_name(db: Session, name: str):
+    return db.query(models.Company).filter(models.Company.name == name).first()
+
+
+def search_company(db: Session, name: str):
+    return db.query(models.Company).filter(models.Company.name.like(f"%{name}%")).all()
+
+
+def search_job(db: Session, title: str, pageSize: int, pageNumber: int):
+    return db.query(models.JobPosition)\
+        .filter(models.JobPosition.title.like(f"%{title}%"))\
+        .offset(pageSize * (pageNumber - 1))\
+        .limit(pageSize)\
         .all()

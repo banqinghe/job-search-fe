@@ -71,7 +71,7 @@ npm run dev
      * 相比 Comapny 多了 detail 字段
      */
     export interface CompanyDetail extends Company {
-      description: string; // 公司描述, 要求等, markdown 文本格式
+      detail: string; // 公司描述, 要求等, markdown 文本格式
     }
     
     /**
@@ -488,13 +488,13 @@ npm run dev
 
 | 说明                                                     | 请求路径       |
 | -------------------------------------------------------- | -------------- |
-| 根据职位 ID 或是 职位名称做模糊查询  | /job/search_job |
+| 根据职位名称做模糊查询  | /job/search_job |
 
 **Request**
 
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
-| query_condition | string | |
+| title | string | 模糊搜索条件 |
 | pageSize | number | 页大小 |
 | pageNumber | number | 页号, 从 1 开始 |
 
@@ -515,13 +515,13 @@ npm run dev
 
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
-| query_condition | string | |
+| name | string | |
 
 **Response**
 
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
-| Company | Company | 可以为空 |
+| companies | Company[] | 可以为空 |
 
 
 #### 获取某一公司

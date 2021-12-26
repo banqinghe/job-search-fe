@@ -95,3 +95,16 @@ class RecruiterJobRecord(BaseModel):
     candidateEmail: str
     resumeUrl: str
     status: str
+
+
+class Company(BaseModel):
+    name: str
+    description: str
+    logoUrl: str
+    officialLink: str
+    jobNumber: str
+    resumeNumber: str
+    detail: str
+
+    class Config:
+        orm_mode = True
