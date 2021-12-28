@@ -28,3 +28,7 @@ a:hover {
         list-style-type: disc;
     }
 }
+
+.avatar-upload .ant-upload-list {
+    display: none;
+}

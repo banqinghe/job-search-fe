@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Popover } from 'antd';
 import LoginModal from '@/views/person/components/LoginModal';
+import ChangePasswordModal from '@/views/person/components/ChangePasswordModal';
 import { UserInfoState, GlobalState } from '@/store/state';
 import { Role } from '@/enums';
 
@@ -19,6 +20,7 @@ function Header(props: HeaderProps) {
   const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
 
   const [loginModalVisible, setLoginModalVisible] = useState(false);
+  const [changPasswordModalVisible, setChangePasswordModalVisible] = useState(false);
 
   function handleClickLogin() {
     setLoginModalVisible(true);
@@ -26,6 +28,10 @@ function Header(props: HeaderProps) {
 
   function handleLoginFinish() {
     setLoginModalVisible(false);
+  }
+
+  function handleChangePassword() {
+    setChangePasswordModalVisible(true);
   }
 
   function handleLogout() {
@@ -58,29 +64,42 @@ function Header(props: HeaderProps) {
           2. 未登录，显示登录按钮
         */}
         {userInfo.role !== Role.NOT_LOGGED ? (
-          <Popover
-            content={(
-              <div className="flex flex-col">
-                <button type="button" className="mb-2">
-                  <Link className="text-black" to="/personal">个人中心</Link>
-                </button>
-                <button
-                  type="button"
-                  className="hover:text-blue-400"
-                  onClick={handleLogout}
-                >
-                  退出登录
-                </button>
+          <>
+            <Popover
+              content={(
+                <div className="flex flex-col">
+                  <button type="button" className="mb-2">
+                    <Link className="text-black" to="/personal">个人中心</Link>
+                  </button>
+                  <button
+                    type="button"
+                    className="hover:text-blue-400 mb-2"
+                    onClick={handleChangePassword}
+                  >
+                    修改密码
+                  </button>
+                  <button
+                    type="button"
+                    className="hover:text-blue-400"
+                    onClick={handleLogout}
+                  >
+                    退出登录
+                  </button>
+                </div>
+              )}
+              // visible={userPopoverVisible}
+              trigger={['hover', 'focus']}
+              placement="bottom"
+            >
+              <div tabIndex={0} className="cursor-pointer">
+                用户 {userInfo.username}
               </div>
-            )}
-            // visible={userPopoverVisible}
-            trigger={['hover', 'focus']}
-            placement="bottom"
-          >
-            <div tabIndex={0} className="cursor-pointer">
-              用户 {userInfo.username}
-            </div>
-          </Popover>
+            </Popover>
+            <ChangePasswordModal
+              visible={changPasswordModalVisible}
+              onCancel={() => setChangePasswordModalVisible(false)}
+            />
+          </>
         ) : (
           <>
             <div className="cursor-pointer" onClick={handleClickLogin}>登录</div>

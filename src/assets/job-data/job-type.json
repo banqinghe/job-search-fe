@@ -1,54 +1,54 @@
 [
   {
-    "value": "technology",
+    "value": "技术",
     "label": "技术",
     "children": [
       {
-        "value": "technology-developer",
+        "value": "技术开发",
         "label": "技术开发",
         "children": [
           {
-            "value": "software-engineer",
+            "value": "软件工程师",
             "label": "软件工程师"
           },
           {
-            "value": "backend-engineer",
+            "value": "后端工程师",
             "label": "后端工程师"
           },
           {
-            "value": "frontend-engineer",
+            "value": "前端工程师",
             "label": "前端工程师"
           },
           {
-            "value": "mobile-engineer",
+            "value": "移动端工程师",
             "label": "移动端工程师"
           }
         ]
       },
       {
-        "value": "test",
+        "value": "测试",
         "label": "测试",
         "children": [
           {
-            "value": "test-engineer",
+            "value": "测试工程师",
             "label": "测试工程师"
           },
           {
-            "value": "auto-test",
+            "value": "自动化测试",
             "label": "自动化测试"
           }
         ]
       },
       {
-        "value": "algorithm",
+        "value": "算法",
         "label": "算法",
         "children": [
           {
-            "value": "nlp-engineer",
+            "value": "NLP 算法工程师",
             "label": "NLP 算法工程师"
           },
           {
-            "value": "cv-engineer",
+            "value": "计算机视觉算法工程师",
             "label": "计算机视觉算法工程师"
           }
         ]
@@ -56,33 +56,33 @@
     ]
   },
   {
-    "value": "service",
+    "value": "服务业",
     "label": "服务业",
     "children": [
       {
-        "value": "food",
+        "value": "餐饮",
         "label": "餐饮",
         "children": [
           {
-            "value": "chief",
+            "value": "厨师",
             "label": "厨师"
           },
           {
-            "value": "waiter",
+            "value": "服务员",
             "label": "服务员"
           }
         ]
       },
       {
-        "value": "retail",
+        "value": "零售业",
         "label": "零售业",
         "children": [
           {
-            "value": "cashier",
+            "value": "收银员",
             "label": "收银员"
           },
           {
-            "value": "seller",
+            "value": "销售员",
             "label": "销售员"
           }
         ]

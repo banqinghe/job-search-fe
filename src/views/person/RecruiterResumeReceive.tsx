@@ -1,7 +1,11 @@
-import { Table, Form, Input, Button, message } from 'antd';
+import { useEffect, useState } from 'react';
+import { Table, Form, Input, Button, Tooltip } from 'antd';
+import { useSelector } from 'react-redux';
+import { GlobalState, UserInfoState } from '@/store/state';
+import service from '@/service';
+import { SearchResumeReceivePayload } from '@/service/index.d';
+import { handlePdfLink } from '@/utils';
 
-// mock user send resume info
-import MockUserResume from '@/mock/user/user-send-resume.json';
 interface UserResumeInfo {
   jobId: string;
   jobTitle: string;
@@ -13,10 +17,37 @@ interface UserResumeInfo {
 }
 
 function RecruiterInfo() {
+  const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
+
+  const [resumeList, setResumeList] = useState<UserResumeInfo[]>([]);
+
   const [searchForm] = Form.useForm();
 
+  useEffect(() => {
+    service.getAllResumeReceive({
+      username: userInfo.username,
+      pageNumber: 1,
+      pageSize: 10,
+    })
+    .then(res => {
+      console.log('get resume', res.data);
+      setResumeList(res.data);
+    })
+  }, []);
+
   const columns = [
-    { title: '职位 ID', dataIndex: 'jobId', key: 'jobId' },
+    {
+      title: '职位 ID',
+      dataIndex: 'jobId',
+      key: 'jobId',
+      render: (item: string) => (
+        <Tooltip title={item}>
+          <div className="w-20 truncate">
+            {item}
+          </div>
+        </Tooltip>
+      )
+    },
     { title: '职位名称', dataIndex: 'jobTitle', key: 'jobTitle' },
     { title: '投递人姓名', dataIndex: 'candidateName', key: 'candidateName' },
     { title: '投递人学历', dataIndex: 'candidateEducation', key: 'candidateEducation' },
@@ -38,12 +69,7 @@ function RecruiterInfo() {
             type="button"
             className="text-blue-400 hover:underline"
             onClick={() => {
-              message.info('未开发完毕');
-              // TODO: 替换为 File Access API
-              // const $a = document.createElement('a');
-              // $a.href = record.resumeUrl,
-              // $a.download = record.candidateName + '_简历';
-              // $a.click();
+              handlePdfLink('http://127.0.0.1:3000/f0f7854d-a672-4a2b-a7c6-06131a0c1e97.pdf', 'test-d.pdf');
             }}
           >
             下载
@@ -60,14 +86,26 @@ function RecruiterInfo() {
         className="mb-5"
         form={searchForm}
         layout="inline"
-        onFinish={values => console.log('search', values)}
+        onFinish={(values: { jobTitle: string; candidateName: string }) => {
+          const formValue: {[key: string]: string} = {};
+          for (const [key, value] of Object.entries(values)) {
+            if (value) {
+              formValue[key] = value;
+            }
+          }
+
+          let searchPayload: SearchResumeReceivePayload  = {
+            pageSize: 10,
+            pageNumber: 1,
+            username: userInfo.username
+          };
+          searchPayload = {...searchPayload, ...formValue};
+          service.searchResumeReceive(searchPayload)
+            .then(res => {
+              setResumeList(res.data);
+            });
+        }}
       >
-        <Form.Item
-          name="jobId"
-          label="职位 ID"
-        >
-          <Input className="w-28" />
-        </Form.Item>
         <Form.Item
           name="jobTitle"
           label="职位名称"
@@ -87,8 +125,8 @@ function RecruiterInfo() {
       </Form>
       <Table
         columns={columns}
-        rowKey={record => record.jobId + '-' + record.candidatePhoneNumber}
-        dataSource={(MockUserResume as UserResumeInfo[])}
+        rowKey={record => (record.jobId + '-' + record.candidatePhoneNumber)}
+        dataSource={resumeList}
       />
     </div>
   )

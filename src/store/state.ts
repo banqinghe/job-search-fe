@@ -27,6 +27,7 @@ export interface UserInfoState {
   salaryRange?: number[];
   userType?: string;
   resumeUrl?: string;
+  avatarUrl?: string;
 
   // 招聘者特定信息
   company?: string;

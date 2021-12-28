@@ -67,7 +67,7 @@ def user_update_info(user: schemas.User,
 )
 def upload_file(file: UploadFile = File(...)):
     ext = file.filename.split(".")[-1]
-    filename = str(uuid.uuid4()) + ext
+    filename = str(uuid.uuid4()) + '.' + ext
     path = consts.STORAGE_DIR / filename
 
     try:

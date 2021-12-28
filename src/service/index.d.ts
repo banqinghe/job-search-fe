@@ -19,7 +19,7 @@ export interface UserRegisterPayload {
 
 export interface UserChangePasswordPayload {
   username: string;
-  prevPassword: string;
+  password: string;
   newPassword: string;
 }
 
@@ -36,8 +36,11 @@ export interface JobHunterUpdateInfoPayload extends UserUpdateInfoPayload {
   jobTag: string[];
   university: string;
   education: string;
+  city: string;
   salaryRange: number[];
   userType: string;
+  resumeUrl: string;
+  avatarUrl: string;
 }
 
 export interface RecruiterUpdateInfoPayload extends UserUpdateInfoPayload {
@@ -45,19 +48,18 @@ export interface RecruiterUpdateInfoPayload extends UserUpdateInfoPayload {
   department: string;
 }
 
-export interface UserUploadAvatarPayload {
-  username: string;
-  avatar: File;
+export interface UploadFilePayload {
+  file: File;
 }
 
-export interface UserUploadResumePayload {
-  username: string;
-  resume: File;
+export interface UploadFilePayload {
+  file: File;
 }
 
 /** 只需要用户名的公用 PayLoad 类型 */
 export interface UsernamePayload {
   username: string;
+  count: number;
 }
 
 export interface PostJobPayload {
@@ -66,7 +68,18 @@ export interface PostJobPayload {
 }
 
 export interface ChangeJobPayload {
-  jobPositionDetail: JobPositionDetail;
+  title: string;
+  id: string;
+  postTime: string
+  location: string | string[];
+  experienceRequirement?: string;
+  educationRequirement?: string;
+  salaryRange: number[];
+  company: string;
+  department: string;
+  logoUrl: string;
+  description: string;
+  poster: string;
 }
 
 export interface DeleteJobPayload {
@@ -82,9 +95,8 @@ export interface UsernameWithPagePayload {
 
 export interface SearchResumeReceivePayload {
   username: string;
-  jobId: string;
-  jobTitle: string;
-  candidateName: string;
+  jobTitle?: string;
+  candidateName?: string;
   pageSize: number;
   pageNumber: number;
 }
@@ -98,8 +110,7 @@ export interface Service {
   userRegister: ServiceFunction<UserRegisterPayload>;
   userChangePassword: ServiceFunction<UserChangePasswordPayload>;
   userUpdateInfo: ServiceFunction<JobHunterUpdateInfoPayload | RecruiterUpdateInfoPayload>;
-  userUploadAvatar: ServiceFunction<UserUploadAvatarPayload>;
-  userUploadResume: ServiceFunction<UserUploadResumePayload>;
+  uploadFile: ServiceFunction<UploadFilePayload>;
   userRecommendJobs: ServiceFunction<UsernamePayload>;
   userJobStars: ServiceFunction<UsernamePayload>;
   userJobRecords: ServiceFunction<UsernamePayload>;

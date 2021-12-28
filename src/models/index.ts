@@ -197,15 +197,17 @@ export interface JobPositionDetail extends JobPosition {
    * 职位描述
    */
   description: string;
+}
+
+export interface JobPositionJobHunterDetail extends JobPositionDetail {
+  /**
+ * 是否收藏
+ */
+  collected: boolean;
 
   /**
-   * 是否收藏
-   */
-   collected: boolean;
-
-   /**
-   * 是否投递
-   */
+  * 是否投递
+  */
   resumed: boolean;
 }
 
