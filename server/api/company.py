@@ -9,6 +9,14 @@ from database import get_db
 router = APIRouter()
 
 
+@router.post(
+    "/add_one",
+)
+def add_one(company: schemas.Company,
+            db: Session = Depends(get_db)):
+    return crud.add_company(db, company)
+
+
 @router.get(
     "/get_one",
     response_model=schemas.Company

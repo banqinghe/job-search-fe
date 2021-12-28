@@ -208,3 +208,9 @@ def search_job(db: Session, title: str, pageSize: int, pageNumber: int):
         .offset(pageSize * (pageNumber - 1))\
         .limit(pageSize)\
         .all()
+
+
+def add_company(db: Session, company: schemas.Company):
+    db_company = models.Company(**company.dict())
+    db.add(db_company)
+    db.commit()
