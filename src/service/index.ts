@@ -10,10 +10,11 @@ import {
   UsernamePayload,
   PostJobPayload,
   ChangeJobPayload,
-  DeleteJobPayload,
+  JobPayload,
   UsernameWithPagePayload,
   SearchResumeReceivePayload,
   ChangeResumeStatusPayload,
+  CompanyPayload,
 } from './index.d';
 
 const service: Service = {
@@ -47,7 +48,37 @@ const service: Service = {
 
   /** 获取推荐职位 */
   userRecommendJobs: (payload: UsernamePayload) =>
-    axios.post('http://127.0.0.1:8000/user/recommend_jobs', payload),
+    axios.get('http://127.0.0.1:8000/job/recommend_jobs', {
+      params: {
+        username: payload.username,
+        count: payload.count,
+      }
+    }),
+
+  /** 获取推荐公司 */
+  userRecommendCompanies: (payload: UsernamePayload) =>
+  axios.get('http://127.0.0.1:8000/company/recommend_companies', {
+    params: {
+      username: payload.username,
+      count: payload.count,
+    }
+  }),
+
+  /** 获取某一职位 */
+  getOneJob: (payload: JobPayload) =>
+    axios.get('http://127.0.0.1:8000/job/get_one', {
+      params: {
+        id: payload.jobId,
+      }
+    }),
+  
+  /** 获取某一公司 */
+  getOneCompany: (payload: CompanyPayload) =>
+  axios.get('http://127.0.0.1:8000/company/get_one', {
+    params: {
+      name: payload.companyName,
+    }
+  }),
 
   /** 获取用户收藏的职位 */
   userJobStars: (payload: UsernamePayload) => axios.post('http://127.0.0.1:8000/user/job_stars', payload),
@@ -75,7 +106,7 @@ const service: Service = {
   changeJob: (payload: ChangeJobPayload) => axios.patch('http://127.0.0.1:8000/job/change_job', payload),
 
   /** 删除已发布的职位 */
-  deleteJob: (payload: DeleteJobPayload) => 
+  deleteJob: (payload: JobPayload) => 
     axios.delete('http://127.0.0.1:8000/job/delete_job', { params: {
       job_id: payload.jobId,
     }}),

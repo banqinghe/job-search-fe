@@ -22,7 +22,7 @@ function Jobs() {
   return (
     <div className="flex flex-col w-full">
       <div className="bg-gray-100 p-6 w-full flex justify-center">
-        <SearchInput className="w-7/12" style={{ minWidth: 800 }} placeholder='搜索职位'/>
+        <SearchInput className="w-7/12" style={{ minWidth: 800 }} placeholder='搜索职位' onSearch={value => location.search = '?searchParams=' + value}/>
       </div>
       <Tabs defaultActiveKey="1" className="mx-20 mt-5">
         <TabPane tab="热门职位" key="1">

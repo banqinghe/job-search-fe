@@ -94,12 +94,15 @@ npm run dev
      * 职位详细信息
      * 相比 JobPosition 多了 detail、collected、resumed 字段
      */
-    export interface JobPositionDetail {
+    export interface JobPositionDetail extends JobPosition {
         description: string;         // 职位描述, 要求等, markdown 文本格式
-        collected: boolean;     // 是否收藏
-        resumed: boolean;       //是否已投递
     }
     
+    export interface JobPositionHunterDetail extends JobPositionDetail {
+        collected: boolean;         // 是否收藏
+        resumed: boolean;           //是否已投递
+    }
+
     /**
      * 用户投递信息
      */
@@ -482,7 +485,7 @@ npm run dev
 
 | 属性名称 | 属性类型 | 备注 |
 | ------- | -------- | ---- |
-| jobPositionDetail | JobPositionDetail | 获取职位详细信息用于展示 |
+| jobPositionHunterDetail | JobPositionHunterDetail | 获取职位详细信息用于展示 |
 
 #### 搜索职位
 

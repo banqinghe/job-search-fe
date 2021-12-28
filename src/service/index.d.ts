@@ -82,8 +82,12 @@ export interface ChangeJobPayload {
   poster: string;
 }
 
-export interface DeleteJobPayload {
+export interface JobPayload {
   jobId: string;
+}
+
+export interface CompanyPayload {
+  companyName: string;
 }
 
 /** 需要用户名分页信息的 Payload 类型 */
@@ -112,12 +116,15 @@ export interface Service {
   userUpdateInfo: ServiceFunction<JobHunterUpdateInfoPayload | RecruiterUpdateInfoPayload>;
   uploadFile: ServiceFunction<UploadFilePayload>;
   userRecommendJobs: ServiceFunction<UsernamePayload>;
+  userRecommendCompanies: ServiceFunction<UsernamePayload>;
   userJobStars: ServiceFunction<UsernamePayload>;
   userJobRecords: ServiceFunction<UsernamePayload>;
   getAllPostJobs: ServiceFunction<UsernamePayload>;
   postJob: ServiceFunction<PostJobPayload>;
+  getOneJob: ServiceFunction<JobPayload>;
   changeJob: ServiceFunction<ChangeJobPayload>;
-  deleteJob: ServiceFunction<DeleteJobPayload>;
+  deleteJob: ServiceFunction<JobPayload>;
+  getOneCompany: ServiceFunction<CompanyPayload>;
   getAllResumeReceive: ServiceFunction<UsernameWithPagePayload>;
   searchResumeReceive: ServiceFunction<SearchResumeReceivePayload>;
   changeResumeStatus: ServiceFunction<ChangeResumeStatusPayload>;

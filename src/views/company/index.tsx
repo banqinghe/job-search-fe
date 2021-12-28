@@ -4,8 +4,10 @@ import { Button, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { HomeOutlined, UserOutlined, FileOutlined } from '@ant-design/icons'
-import { Company, JobPosition } from '@/models'
+import { CompanyDetail, JobPosition } from '@/models'
 import JobPositionCard from '@/components/JobPositionCard';
+import ReactMarkdown from 'react-markdown';
+import service from '@/service';
 
 const {TabPane} = Tabs;
 
@@ -13,14 +15,14 @@ function CompanyPage() {
   const params = useParams();
   const name = params.name ?? '未知公司';
   
-  const [companyInfo, setCompanyInfo] = useState<Company | null>(null);
+  const [companyInfo, setCompanyInfo] = useState<CompanyDetail | null>(null);
 
   useEffect(() => {
-    (MockRecommendCompanies as Company[]).map(company => {
-      if (company.name === name){
-        setCompanyInfo(company)
+    service.getOneCompany({companyName: name}).then(
+      res => {
+        setCompanyInfo(res.data)
       }
-    })
+    )
     document.title = name + '公司详情';
   }, [name])
 
@@ -47,8 +49,10 @@ function CompanyPage() {
             </div>
           </div>
         </div>
-        <Tabs defaultActiveKey="1" className="mx-40 bg-white px-8">
-          <TabPane tab="公司主页" key="1"></TabPane>
+        <Tabs defaultActiveKey="1" className="mx-40 bg-white px-8" style={{ minHeight: '55vh' }}>
+          <TabPane tab="公司主页" key="1">
+            <ReactMarkdown className="markdown-body py-5 pr-12">{companyInfo.detail}</ReactMarkdown>
+          </TabPane>
           <TabPane tab="招聘职位" key="2">
             {(MockRecommendJobs as JobPosition[]).map(jobInfo =>(
               <JobPositionCard jobInfo={jobInfo} />
