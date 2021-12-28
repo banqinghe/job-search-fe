@@ -55,7 +55,12 @@ def get_all_post_job(db: Session, username: str):
 
 
 def post_job(db: Session, job: schemas.JobPostRequest, username: str):
-    db_job = models.JobPosition(**job.dict(), poster=username)
+    db_company = db.query(models.Company)\
+        .join(models.User, models.User.company == models.Company.name)\
+        .filter(models.User.username == username)\
+        .first()
+    db_job = models.JobPosition(
+        **job.dict(), poster=username, logoUrl=db_company.logoUrl)
     db.add(db_job)
     db.commit()
     db.refresh(db_job)

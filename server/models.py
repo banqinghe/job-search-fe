@@ -49,7 +49,7 @@ class JobPosition(Base):
     company = Column(String)
     department = Column(String)
     # FIXME
-    logoUrl = Column(String, default="no url")
+    logoUrl = Column(String)
     description = Column(String)
 
 
