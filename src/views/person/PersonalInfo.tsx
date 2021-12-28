@@ -13,10 +13,12 @@ import { GlobalState, UserInfoState } from '@/store/state';
 import JobPositionCard from '@/components/JobPositionCard';
 import UploadResumeModal from './components/UploadResumeModal';
 import { JobPosition } from '@/models';
-
+import service from '@/service';
+import defaultAvatarUrl from '@/assets/default-avatar.png';
 // Mock recommend job position
 import MockRecommendJobs from '@/mock/company/recommend-job-position.json';
 
+// TODO: avatar typo
 function PersonalInfo() {
   const dispatch = useDispatch();
   const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
@@ -27,7 +29,38 @@ function PersonalInfo() {
     <div className="px-8 py-6 space-y-6">
       {/* Card 1: 个人信息 */}
       <div className="flex space-x-10 mb-12">
-        <Avatar size={116} src="https://pic3.zhimg.com/v2-aebd38442f665e76b53b740f2294e9b6_r.jpg" />
+        <Upload
+          maxCount={1}
+          className="avatar-upload"
+          customRequest={({ file, onSuccess, onError }) => {
+            console.log('file:', file);
+            service.uploadFile({
+              file: file as File,
+            })
+              .then(res => {
+                message.success('上传成功', res.data);
+                onSuccess && onSuccess({ result: res.data })
+                console.log('file url', res.data);
+                return service.userUpdateInfo({
+                  ...userInfo,
+                  avatarUrl: res.data,
+                } as any);
+              })
+              .then(res => {
+                dispatch({
+                  type: 'user/updateInfo', payload: {
+                    ...userInfo,
+                    avatarUrl: res.data.avatarUrl,
+                  }
+                });
+              })
+              .catch(e => {
+                onError && onError(e);
+              });
+          }}
+        >
+          <Avatar size={116} src={userInfo.avatarUrl ?? userInfo.avaterUrl ?? defaultAvatarUrl} />
+        </Upload>
         <div className="flex-1">
           {/* 真实姓名 */}
           <div className="flex items-end mb-5">
@@ -55,7 +88,10 @@ function PersonalInfo() {
 
         <Tooltip title="编辑个人信息">
           {/* TODO: 调用个人信息表单，发送请求成功后更新 */}
-          <EditOutlined className="cursor-pointer text-lg hover:text-blue-500" />
+          <EditOutlined
+            className="cursor-pointer text-lg hover:text-blue-500"
+          // onClick={() =>  }
+          />
         </Tooltip>
       </div>
 
@@ -90,20 +126,30 @@ function PersonalInfo() {
           <Upload.Dragger
             maxCount={1}
             customRequest={({ file, onSuccess, onError }) => {
-              console.log('custom upload:', file);
-              // TODO: ajax 上传文件
-              Promise.resolve()
-                .then(result => {
+              console.log('file:', file);
+              service.uploadFile({
+                file: file as File,
+              })
+                .then(res => {
                   message.success('上传成功');
-                  onSuccess && onSuccess({ result });
+                  onSuccess && onSuccess({ result: res.data })
+                  console.log('file url', res.data);
+                  return service.userUpdateInfo({
+                    ...userInfo,
+                    resumeUrl: res.data,
+                  } as any);
+                })
+                .then(res => {
                   dispatch({
-                    type: 'user/updateInfo',
-                    payload: { resumeUrl: 'https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf' }
+                    type: 'user/updateInfo', payload: {
+                      ...userInfo,
+                      resumeUrl: res.data.resumeUrl,
+                    }
                   });
                 })
                 .catch(e => {
                   onError && onError(e);
-                })
+                });
             }}
           >
             <div className="text-gray-400 hover:text-blue-400">

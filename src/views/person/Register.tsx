@@ -7,20 +7,15 @@ import JobInfoForm from './components/JobInfoForm';
 import CompanyInfoForm from './components/CompanyInfoForm';
 import { GlobalState, UserInfoState } from '@/store/state';
 import { Role } from '@/enums';
+import service from '@/service';
 
 function Register() {
   const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log('current user info', userInfo);
 
   useEffect(() => {
-    // 已经完成注册流程，非法访问，重定向至主页
-    // if (infoCompleteness.account) {
-    //   message.warning('你已完成注册流程');
-    //   navigate('/', { replace: true });
-    // }
     dispatch({ type: 'bar/display', payload: false });
     return () => {
       dispatch({ type: 'bar/display', payload: true });
@@ -32,60 +27,47 @@ function Register() {
   const [companyForm] = Form.useForm();
 
   function handleSubmit(values: any) {
-    console.log('invoke onFinish:', values);
-
     if (userInfo.role === Role.NOT_LOGGED) {
-      // TODO: 发送账户注册请求，变更全局状态
-      Promise
-        .resolve()
-        .then(() => {
-          dispatch({
-            type: 'user/updateInfo',
-            payload: {
-              username: values.username,
-              name: values.name,
-              role: values.role === 'job_hunter' ? Role.JOB_HUNTER : Role.RECRUITER,
-              phoneNumber: values.phoneNumber,
-              email: values.email,
-            },
-          });
-        });
-
+      service.userRegister({
+        username: values.username,
+        password: values.password,
+        role: values.role === 'jobHunter' ? Role.JOB_HUNTER : Role.RECRUITER,
+        name: values.name,
+        phoneNumber: values.phoneNumber,
+        email: values.email,
+      }).then(res => {
+        dispatch({ type: 'user/updateInfo', payload: res.data });
+      }).catch(() => {
+        message.warning('用户名已存在');
+      });
       return;
     } else if (userInfo.role === Role.JOB_HUNTER) {
-      // TODO: 发送工作信息请求，直接登录，导航至首页
-      Promise
-        .resolve()
-        .then(() => {
-          dispatch({
-            type: 'user/updateInfo',
-            payload: {
-              ...userInfo,
-              jobType: values.jobType[values.jobType.length - 1],
-              jobTag: values.jobTag,
-              university: values.university,
-              education: values.education,
-              city: values.city[values.city.length - 1],
-              salaryRange: [values.minSalary, values.maxSalary],
-              userType: values.userType,
-            },
-          });
-          navigate('/');
-        });
+      service.userUpdateInfo({
+        ...userInfo,
+        jobType: values.jobType[values.jobType.length - 1],
+        jobTag: values.jobTag,
+        university: values.university,
+        education: values.education,
+        city: values.city[values.city.length - 1],
+        salaryRange: [values.minSalary, values.maxSalary],
+        userType: values.userType,
+        resumeUrl: "",
+        avatarUrl: "",
+      }).then(res => {
+        console.log('jobHunter update info res:', res);
+        dispatch({ type: 'user/updateInfo', payload: res.data });
+        navigate('/');
+      });
     } else if (userInfo.role === Role.RECRUITER) {
-      Promise
-        .resolve()
-        .then(() => {
-          dispatch({
-            type: 'user/updateInfo',
-            payload: {
-              ...userInfo,
-              company: values.companyName,
-              department: values.department,
-            },
-          });
-          navigate('/');
-        });
+      service.userUpdateInfo({
+        ...userInfo,
+        company: values.companyName,
+        department: values.department,
+      }).then(res => {
+        console.log('recruiter update info res:', res.data);
+        dispatch({ type: 'user/updateInfo', payload: res.data });
+        navigate('/');
+      })
     }
 
   }

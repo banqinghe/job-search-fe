@@ -9,6 +9,9 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+
+app.include_router(router=router)
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
@@ -17,5 +20,3 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-app.include_router(router=router)

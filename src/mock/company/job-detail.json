@@ -20,7 +20,7 @@
     "department": "市场部",
     "location": ["上海", "北京"],
     "logoUrl": "/src/assets/logo/two.jpg",
-    "description": "# 有手就行"
+    "description": "# Effective TypeScript Notes\n\n## Getting to Know TypeScript\n\n- TypeScript 是 JavaScript 的超集，这意味着迁移很容易\n- 即使有一些代码是可以正常运行的，但是 TypeScript 依然会 Warning。TypeScript 会在它认为代码不符合开发者意图的情况下 Warning，而这里的 Warning 时机取决于其实取决于 TypeScript 的开发者\n\n  > How does TypeScript decide when to model JavaScript’s runtime behavior and when to go beyond it? Ultimately this is a matter of taste.\n\n  ```typescript\n  let a = '1' + 0; // correct\n  let b = [] + 1;  // warning\n  ```\n\n- TypeScript 的类型系统并不健全（sound），比如无法检测出数组的越界"
   },
   {
     "title": "外卖骑手",

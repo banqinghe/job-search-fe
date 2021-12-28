@@ -6,6 +6,7 @@ import { Role } from '@/enums';
 
 // mock user info
 import MockUserInfoList from '@/mock/user/user-info.json';
+import service from '@/service';
 
 interface LoginModalProps {
   visible: boolean;
@@ -20,20 +21,16 @@ function LoginModal(props: LoginModalProps) {
   const navigate = useNavigate();
 
   function handleLogin(values: any) {
-    // TODO: 登录验证, 请求完整 user info
-    Promise.resolve().then(() => {
-      let userInfo;
-      if (values.username === 'banqinghe') {
-        userInfo = MockUserInfoList[0];
-      } else if (values.username === 'recruiter') {
-        userInfo = MockUserInfoList[1];
-      } else {
-        message.error('用户名或密码错误');
-        return;
-      }
-      dispatch({type: 'user/updateInfo', payload: userInfo});
+    service.userLogin({
+      username: values.username,
+      password: values.password,
+    }).then(res => {
+      console.log('login res:', res.data);
+      dispatch({type: 'user/updateInfo', payload: res.data});
       onFinish && onFinish();
-    });
+    }).catch(() => {
+      message.warning('用户名或密码错误');
+    })
   }
 
   function handleClickRegister() {

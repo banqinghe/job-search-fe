@@ -2,7 +2,7 @@ export const enum Role {
   /**
    * 求职者
    */
-  JOB_HUNTER = 'job_hunter',
+  JOB_HUNTER = 'jobHunter',
   
   /**
    * 招聘人员
@@ -12,5 +12,5 @@ export const enum Role {
   /**
    * 未登录
    */
-  NOT_LOGGED = 'not_logged',
+  NOT_LOGGED = 'notLogged',
 };

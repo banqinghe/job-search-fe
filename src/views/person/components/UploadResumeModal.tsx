@@ -1,6 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { message, Modal, Upload } from 'antd';
 import { InboxOutlined  } from '@ant-design/icons';
+import service from '@/service';
+import { GlobalState, UserInfoState } from '@/store/state';
 
 interface UploadResumeModalProps {
   visible: boolean;
@@ -11,6 +13,7 @@ function UploadResumeModal(props: UploadResumeModalProps) {
   const { visible, onCancel } = props;
 
   const dispatch = useDispatch();
+  const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
 
   return (
     <Modal
@@ -22,22 +25,28 @@ function UploadResumeModal(props: UploadResumeModalProps) {
       <Upload.Dragger
         maxCount={1}
         customRequest={({ file, onSuccess, onError }) => {
-          // console.log('custom upload:', file);
-          // TODO: ajax 上传文件
-          Promise.resolve()
-            .then(result => {
-              message.success('上传成功');
-              onSuccess && onSuccess({ result });
-              dispatch({
-                type: 'user/updateInfo',
-                payload: {
-                  resumeUrl: 'https://orimi.com/pdf-test.pdf',
-                }
-              })
-            })
-            .catch(e => {
-              onError && onError(e);
-            })
+          console.log('file:', file);
+          service.uploadFile({
+            file: file as File,
+          })
+          .then(res => {
+            message.success('上传成功');
+            onSuccess && onSuccess({ result: res.data })
+            console.log('file url', res.data);
+            return service.userUpdateInfo({
+              ...userInfo,
+              resumeUrl: res.data,
+            } as any);
+          })
+          .then(res => {
+            dispatch({type: 'user/updateInfo', payload: {
+              ...userInfo,
+              resumeUrl: res.data.resumeUrl,
+            }});
+          })
+          .catch(e => {
+            onError && onError(e);
+          });
         }}
       >
         <div className="text-gray-400 hover:text-blue-400">
