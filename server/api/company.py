@@ -32,5 +32,6 @@ def search_company(name: str,
     response_model=list[schemas.Company]
 )
 def recommend_companies(username: str,
+                        count: int,
                         db: Session = Depends(get_db)):
-    return crud.recommend_companies(db, username)
+    return crud.recommend_companies(db, username, count)
