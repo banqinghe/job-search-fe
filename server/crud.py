@@ -243,3 +243,11 @@ def star_exists(db: Session, username: str, job_id: UUID):
         .filter(models.JobStar.username == username)\
         .filter(models.JobStar.jobId == job_id)\
         .first() is not None
+
+
+def get_jobs_by_company(db: Session, company: str):
+    return db.query(models.JobPosition)\
+            .join(models.User, models.User.name == models.JobPosition.poster)\
+            .filter(models.User.company == company)\
+            .all()
+

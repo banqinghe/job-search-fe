@@ -43,3 +43,12 @@ def recommend_companies(username: str,
                         count: int,
                         db: Session = Depends(get_db)):
     return crud.recommend_companies(db, username, count)
+
+
+@router.get(
+    "/get_jobs",
+    response_model=list[schemas.JobPostResponse]
+)
+def get_jobs(name: str,
+             db: Session = Depends(get_db)):
+    return crud.get_jobs_by_company(db, name)
