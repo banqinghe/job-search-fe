@@ -69,6 +69,8 @@ class JobPostResponse(JobPostRequest):
     poster: str
     postTime: datetime
     logoUrl: str
+    collected: Optional[bool]
+    resumed: Optional[bool]
 
     class Config:
         orm_mode = True

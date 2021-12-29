@@ -48,6 +48,13 @@ def get_record_by_id(db: Session, id: UUID):
     return db.query(models.JobRecord).filter(models.JobRecord.id == id).first()
 
 
+def get_collected_jobs(db: Session, username: str):
+    return db.query(models.JobPosition)\
+            .join(models.JobStar, models.JobStar.jobId == models.JobPosition.id)\
+            .filter(models.JobStar.username == username)\
+            .all()
+
+
 def get_all_post_job(db: Session, username: str):
     return db.query(models.JobPosition)\
         .filter(models.JobPosition.poster == username)\
@@ -87,9 +94,12 @@ def delete_job(db: Session, job_id: UUID):
 
 
 def collect_job(db: Session, job_id: UUID, username: str):
-    db_user = get_user_by_username(db, username)
-    db_user.jobStars.append(job_id)
-    db_user.commit()
+    db_star = models.JobStar(
+        jobId=job_id,
+        username=username
+    )
+    db.add(db_star)
+    db.commit()
 
 
 def apply_job(db: Session, job_id: UUID, username: str):
@@ -219,3 +229,17 @@ def add_company(db: Session, company: schemas.Company):
     db_company = models.Company(**company.dict())
     db.add(db_company)
     db.commit()
+
+
+def record_exists(db: Session, username: str, job_id: UUID):
+    return db.query(models.JobRecord)\
+        .filter(models.JobRecord.username == username)\
+        .filter(models.JobRecord.jobId == job_id)\
+        .first() is not None
+
+
+def star_exists(db: Session, username: str, job_id: UUID):
+    return db.query(models.JobStar)\
+        .filter(models.JobStar.username == username)\
+        .filter(models.JobStar.jobId == job_id)\
+        .first() is not None

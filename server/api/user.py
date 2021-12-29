@@ -27,7 +27,8 @@ def user_login(user: schemas.UserLogin,
 
 
 @router.post(
-    "/register"
+    "/register",
+    response_model=schemas.User
 )
 def user_register(user: schemas.UserRegister,
                   db: Session = Depends(get_db)):

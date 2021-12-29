@@ -18,7 +18,6 @@ class User(Base):
     phoneNumber = Column(String, index=True, nullable=False)
     email = Column(String, unique=True, nullable=False)
     avatarUrl = Column(String)
-    jobsStars = Column(ARRAY(String))
 
     # jobHunter
     jobType = Column(String)
@@ -63,6 +62,13 @@ class JobRecord(Base):
     sendTime = Column(DateTime, server_default=func.now())
     status = Column(String, default="unread")
 
+
+class JobStar(Base):
+    __tablename__ = "job_stars"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    jobId = Column(UUID(as_uuid=True))
+    username = Column(String)
 
 class Company(Base):
     __tablename__ = "companies"
