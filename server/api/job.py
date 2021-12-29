@@ -24,8 +24,17 @@ def get_all_post_job(username: str,
     response_model=schemas.JobPostResponse
 )
 def get_job(id: UUID,
+            username: str,
             db: Session = Depends(get_db)):
-    return crud.get_job_by_id(db, id)
+    db_job = crud.get_job_by_id(db, id)
+    db_user = crud.get_user_by_username(db, username)
+    if db_user.role == "recruiter":
+        return db_job
+    else:
+        ret = schemas.JobPostResponse(**db_job.__dict__)
+        ret.resumed = crud.record_exists(db, username, db_job.id)
+        ret.collected = crud.star_exists(db, username, db_job.id)
+        return ret;
 
 
 @router.post(
@@ -101,6 +110,16 @@ def get_candidate_records(
         username: str,
         db: Session = Depends(get_db)):
     return crud.get_candidate_records(db, username)
+
+
+@router.get(
+    "/get_collected_jobs",
+    response_model=list[schemas.JobPostResponse]
+)
+def get_candidate_records(
+        username: str,
+        db: Session = Depends(get_db)):
+    return crud.get_collected_jobs(db, username)
 
 
 @router.get(
