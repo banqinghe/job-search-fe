@@ -50,9 +50,9 @@ def get_record_by_id(db: Session, id: UUID):
 
 def get_collected_jobs(db: Session, username: str):
     return db.query(models.JobPosition)\
-            .join(models.JobStar, models.JobStar.jobId == models.JobPosition.id)\
-            .filter(models.JobStar.username == username)\
-            .all()
+        .join(models.JobStar, models.JobStar.jobId == models.JobPosition.id)\
+        .filter(models.JobStar.username == username)\
+        .all()
 
 
 def get_all_post_job(db: Session, username: str):
@@ -203,18 +203,20 @@ def recommend_jobs(db: Session, username: str, count: int):
 
 
 def recommend_companies(db: Session, username: str, count: int):
-    return db.query(models.Company)\
-        .order_by(func.random())\
-        .limit(count)\
-        .all()
+    return [company_from_db(db, db_company) for db_company in
+            db.query(models.Company)
+            .order_by(func.random())
+            .limit(count)
+            .all()]
 
 
 def get_company_by_name(db: Session, name: str):
-    return db.query(models.Company).filter(models.Company.name == name).first()
+    return company_from_db(db, db.query(models.Company).filter(models.Company.name == name).first())
 
 
 def search_company(db: Session, name: str):
-    return db.query(models.Company).filter(models.Company.name.like(f"%{name}%")).all()
+    return [company_from_db(db, db_company) for db_company in
+            db.query(models.Company).filter(models.Company.name.like(f"%{name}%")).all()]
 
 
 def search_job(db: Session, title: str, pageSize: int, pageNumber: int):
@@ -223,6 +225,20 @@ def search_job(db: Session, title: str, pageSize: int, pageNumber: int):
         .offset(pageSize * (pageNumber - 1))\
         .limit(pageSize)\
         .all()
+
+
+def company_from_db(db: Session, db_company: models.Company):
+    ret = schemas.Company(**db_company.__dict__)
+    ret.jobNumber = db.query(models.JobPosition)\
+        .join(models.User, models.User.username == models.JobPosition.poster)\
+        .filter(models.User.company == db_company.name)\
+        .count()
+    ret.jobNumber = db.query(models.JobRecord)\
+        .join(models.JobPosition, models.JobPosition.id == models.JobRecord.jobId)\
+        .join(models.User, models.User.username == models.JobPosition.poster)\
+        .filter(models.User.company == db_company.name)\
+        .count()
+    return ret
 
 
 def add_company(db: Session, company: schemas.Company):
@@ -247,7 +263,6 @@ def star_exists(db: Session, username: str, job_id: UUID):
 
 def get_jobs_by_company(db: Session, company: str):
     return db.query(models.JobPosition)\
-            .join(models.User, models.User.name == models.JobPosition.poster)\
-            .filter(models.User.company == company)\
-            .all()
-
+        .join(models.User, models.User.name == models.JobPosition.poster)\
+        .filter(models.User.company == company)\
+        .all()

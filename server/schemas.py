@@ -104,8 +104,8 @@ class Company(BaseModel):
     description: str
     logoUrl: str
     officialLink: str
-    jobNumber: str
-    resumeNumber: str
+    jobNumber: int
+    resumeNumber: int
     detail: str
 
     class Config:

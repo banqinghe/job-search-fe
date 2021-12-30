@@ -77,6 +77,4 @@ class Company(Base):
     description = Column(String)
     logoUrl = Column(String)
     officialLink = Column(String)
-    jobNumber = Column(String)
-    resumeNumber = Column(String)
     detail = Column(String)
