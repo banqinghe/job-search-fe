@@ -1,9 +1,9 @@
-import MockRecommendJobs from '@/mock/company/recommend-job-position.json';
-import MockRecommendCompanies from '@/mock/company/recommend-company.json';
+// import MockRecommendJobs from '@/mock/company/recommend-job-position.json';
+// import MockRecommendCompanies from '@/mock/company/recommend-company.json';
 import { Button, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { HomeOutlined, UserOutlined, FileOutlined } from '@ant-design/icons'
+// import { HomeOutlined, UserOutlined, FileOutlined } from '@ant-design/icons'
 import { CompanyDetail, JobPosition } from '@/models'
 import JobPositionCard from '@/components/JobPositionCard';
 import ReactMarkdown from 'react-markdown';
@@ -14,17 +14,23 @@ const {TabPane} = Tabs;
 function CompanyPage() {
   const params = useParams();
   const name = params.name ?? '未知公司';
-  
   const [companyInfo, setCompanyInfo] = useState<CompanyDetail | null>(null);
+  const [jobList, setJobList] = useState<JobPosition[]>([]);
+  const showJob = new URLSearchParams(location.search).get('showJob') == 'true';
 
   useEffect(() => {
-    service.getOneCompany({companyName: name}).then(
-      res => {
-        setCompanyInfo(res.data)
-      }
-    )
-    document.title = name + '公司详情';
-  }, [name])
+    service
+      .getOneCompany({companyName: name})
+      .then(res => {
+        setCompanyInfo(res.data);
+        return service.getAllJobsByCompany({ companyName: name });
+      })
+      .then(res => {
+        console.log('this', res.data);
+        setJobList(res.data);
+      });
+    // document.title = name + '公司详情';
+  }, [name]);
 
   return (
     companyInfo && (
@@ -49,13 +55,16 @@ function CompanyPage() {
             </div>
           </div>
         </div>
-        <Tabs defaultActiveKey="1" className="mx-40 bg-white px-8" style={{ minHeight: '55vh' }}>
+        <Tabs defaultActiveKey={showJob ? "2" : "1"} 
+          className="mx-40 bg-white px-8" 
+          style={{ minHeight: '55vh' }}
+        >
           <TabPane tab="公司主页" key="1">
             <ReactMarkdown className="markdown-body py-5 pr-12">{companyInfo.detail}</ReactMarkdown>
           </TabPane>
           <TabPane tab="招聘职位" key="2">
-            {(MockRecommendJobs as JobPosition[]).map(jobInfo =>(
-              <JobPositionCard jobInfo={jobInfo} />
+            {jobList.map(jobInfo =>(
+              <JobPositionCard key={jobInfo.id} jobInfo={jobInfo} onClick={() => open('/job/' + jobInfo.id, '_blank')}/>
             ))}
           </TabPane>
         </Tabs>

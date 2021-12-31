@@ -2,23 +2,28 @@ import { Button, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { HomeOutlined, UserOutlined, FileOutlined } from '@ant-design/icons'
-import { Company, JobPositionJobHunterDetail } from '@/models';
+import { Company, JobPositionDetail, JobPositionJobHunterDetail } from '@/models';
 import ReactMarkdown from 'react-markdown';
 import service from '@/service';
 import { formatDate } from '@/utils';
+import { GlobalState, UserInfoState } from '@/store/state';
+import { useSelector } from 'react-redux';
+import { Role } from '@/enums';
 
 function Job() {
   const [collectLoading, setCollectLoading] = useState(false);
-  const [sendLoading, setSendLoading] = useState(false);
+  const [resumeLoading, setResumeLoading] = useState(false);
   const params = useParams();
   const [job, setJob] = useState<JobPositionJobHunterDetail>();
   const [companyInfo, setCompanyInfo] = useState<Company | null>(null);
+  const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
+  
 
   useEffect(() => {
-    service.getOneJob({jobId: params.id ?? ''})
+    service.getOneJob({jobId: params.id ?? '', username: userInfo.username || 'lzk'})
       .then(res => {
         const jobData: JobPositionJobHunterDetail = res.data;
-        document.title = jobData.title + '招聘';
+        // document.title = jobData.title + '招聘';
         setJob(jobData)
         return service.getOneCompany({companyName: jobData.company}).then(
           res => {
@@ -45,31 +50,40 @@ function Job() {
                 <span>{job.educationRequirement ?? '学历不限'}</span>
             </p>
           </div>
-          <div className="flex items-end space-x-5">
+          {userInfo.role === Role.JOB_HUNTER && <div className="flex items-end space-x-5">
             <Button
               className="flex items-center"
               type="default"
               loading={collectLoading}
               onClick={() => {
-                console.log(params)
                 setCollectLoading(true)
-                setTimeout(() => setCollectLoading(false), 1000)
+                service.collectJob({username: userInfo.username, jobId: job.id}).then(() =>{
+                  // setJob(prev => ({...prev, prev.})})
+                  setJob((prev: any) => ({...prev, collected: true}))
+                  setCollectLoading(false)
+                })
               }}
+              disabled={job.collected}
             >
-              收藏
+              {job.collected ? '已收藏':'收藏'}
             </Button>
             <Button
               className="flex items-center"
               type="primary"
-              loading={sendLoading}
+              loading={resumeLoading}
               onClick={() => {
-                setSendLoading(true)
-                setTimeout(() => setSendLoading(false), 1000)
+                setResumeLoading(true)
+                service.resumeJob({username: userInfo.username, jobId: job.id}).then(() =>{
+                  // setJob(prev => ({...prev, prev.})})
+                  setJob((prev: any) => ({...prev, resumed: true}))
+                  setResumeLoading(false)
+                })
               }}
+              disabled={job.resumed}
             >
-              投递简历
+              {job.resumed ? '已投递':'投递简历'}
             </Button>
-          </div>
+          </div>}
         </div>
         <div className="flex ml-60 mb-7" style={{ minWidth: 350 }}>
           <p className="mt-5 space-x-5">

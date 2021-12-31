@@ -42,7 +42,7 @@ function CompanyCard(props: CompanyCardProps) {
           {Array.isArray(companyInfo.location) ? companyInfo.location.join('、') : companyInfo.location}
         </p>
         <Tooltip title={companyInfo.description}>
-          <span className="truncate w-full mt-2 mb-5">{companyInfo.description}</span>
+          <span className="truncate text-center w-full mt-2 mb-5">{companyInfo.description}</span>
         </Tooltip>
       </div>
       <div className="flex divide-x divide-dotted divide-gray-200">

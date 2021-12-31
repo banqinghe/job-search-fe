@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tag, Avatar, Tooltip, Upload, message } from 'antd';
 import {
@@ -12,18 +12,26 @@ import {
 import { GlobalState, UserInfoState } from '@/store/state';
 import JobPositionCard from '@/components/JobPositionCard';
 import UploadResumeModal from './components/UploadResumeModal';
+import UpdateInfoModal from './components/UpdateInfoModal';
 import { JobPosition } from '@/models';
 import service from '@/service';
 import defaultAvatarUrl from '@/assets/default-avatar.png';
-// Mock recommend job position
-import MockRecommendJobs from '@/mock/company/recommend-job-position.json';
 
-// TODO: avatar typo
 function PersonalInfo() {
   const dispatch = useDispatch();
   const userInfo = useSelector<GlobalState, UserInfoState>(state => state.userInfo);
 
   const [uploadResumeVisible, setUploadResumeVisible] = useState(false);
+  const [updateInfoVisible, setUpdateInfoVisible] = useState(false);
+  const [recommendJobList, setRecommendJobList] = useState<JobPosition[]>([]);
+
+  useEffect(() => {
+    service
+      .userRecommendJobs({ username: userInfo.username, count: 6 })
+      .then(res => {
+        setRecommendJobList(res.data);
+      });
+  }, []);
 
   return (
     <div className="px-8 py-6 space-y-6">
@@ -90,7 +98,9 @@ function PersonalInfo() {
           {/* TODO: 调用个人信息表单，发送请求成功后更新 */}
           <EditOutlined
             className="cursor-pointer text-lg hover:text-blue-500"
-          // onClick={() =>  }
+            onClick={() => {
+              setUpdateInfoVisible(true);
+            }}
           />
         </Tooltip>
       </div>
@@ -164,8 +174,8 @@ function PersonalInfo() {
       <div>
         <h2 className="text-xl font-bold pb-4 mb-4 border-b">推荐职位</h2>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-          {(MockRecommendJobs as JobPosition[]).map(jobInfo => (
-            <JobPositionCard key={jobInfo.id} jobInfo={jobInfo} />
+          {recommendJobList.map(jobInfo => (
+            <JobPositionCard key={jobInfo.id} jobInfo={jobInfo} onClick={() => window.open('/job/' + jobInfo.id)} />
           ))}
         </div>
       </div>
@@ -174,6 +184,11 @@ function PersonalInfo() {
       <UploadResumeModal
         visible={uploadResumeVisible}
         onCancel={() => setUploadResumeVisible(false)}
+      />
+      <UpdateInfoModal
+        role={userInfo.role}
+        visible={updateInfoVisible}
+        onCancel={() => setUpdateInfoVisible(false)}
       />
     </div>
   );

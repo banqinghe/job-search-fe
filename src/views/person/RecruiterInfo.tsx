@@ -9,6 +9,7 @@ import { getLocationArray, formatDate } from '@/utils';
 import JobPostForm, { JobPostFormValues } from './components/JobPostForm';
 import service from '@/service';
 import defaultAvatarUrl from '@/assets/default-avatar.png';
+import UpdateInfoModal from './components/UpdateInfoModal';
 
 function RecruiterInfo() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function RecruiterInfo() {
   const [jobPositionList, setJobPositionList] = useState<JobPositionDetail[]>([]);
   const currentFormStatus = useRef<'create' | 'update'>('create');
   const currentJobRecord = useRef<JobPositionDetail>();
+  const [updateInfoVisible, setUpdateInfoVisible] = useState(false);
 
   const [jobForm] = Form.useForm();
 
@@ -230,7 +232,10 @@ function RecruiterInfo() {
 
         <Tooltip title="编辑个人信息">
           {/* TODO: 调用个人信息表单，发送请求成功后更新 */}
-          <EditOutlined className="cursor-pointer text-lg hover:text-blue-500" />
+          <EditOutlined
+            className="cursor-pointer text-lg hover:text-blue-500"
+            onClick={() => setUpdateInfoVisible(true)}
+          />
         </Tooltip>
       </div>
 
@@ -286,6 +291,12 @@ function RecruiterInfo() {
           </Button>
         </div>
       </Modal>
+
+      <UpdateInfoModal
+        role={userInfo.role}
+        visible={updateInfoVisible}
+        onCancel={() => setUpdateInfoVisible(false)}
+      />
     </div>
   );
 }

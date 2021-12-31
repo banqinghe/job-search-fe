@@ -45,7 +45,7 @@ function Home() {
             {(companyList as Company[]).map(companyInfo => (
               <CompanyCard key={companyInfo.name} companyInfo={companyInfo}
                 CardClick={() => open('/company/' + companyInfo.name, '_blank')}
-                JobClick={() => open('/jobs/' + companyInfo.name, '_blank')}
+                JobClick={() => open('/company/' + companyInfo.name +'?showJob=true', '_blank')}
                 ResumeClick={() => open('/company/' + companyInfo.name, '_blank')}
               />
             ))}

@@ -1,10 +1,6 @@
-import JobPositionCard from '@/components/JobPositionCard';
-import { Company, JobPosition } from '@/models';
-import MockRecommendJobs from '@/mock/company/recommend-job-position.json';
-import MockRecommendCompanys from '@/mock/company/recommend-company.json';
+import { Company } from '@/models';
 import { Tabs } from 'antd';
 import CompanyCard from '@/components/CompanyCard';
-import SearchInput from '../home/components/SearchInput';
 import { useEffect, useState } from 'react';
 import service from '@/service';
 import { GlobalState, UserInfoState } from '@/store/state';

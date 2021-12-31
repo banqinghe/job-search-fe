@@ -12,7 +12,7 @@ router = APIRouter()
 @router.post(
     "/add_one",
 )
-def add_one(company: schemas.Company,
+def add_one(company: schemas.CompanyRequest,
             db: Session = Depends(get_db)):
     return crud.add_company(db, company)
 

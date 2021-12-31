@@ -1,4 +1,5 @@
 import { JobRecord } from '@/models';
+import { formatDate } from '@/utils';
 import React from 'react';
 
 interface JobRecordCardProps {
@@ -30,7 +31,9 @@ function JobRecordCard(props: JobRecordCardProps) {
       <div>
         <div className="flex justify-between mb-2.5">
           <h2 className="text-xl font-bold">{record.title}</h2>
-          <div className="text-gray-500 self-start">投递时间: {record.sendTime}</div>
+          <div className="text-gray-500 self-start">
+            投递时间: {formatDate(new Date(record.sendTime), true)}
+          </div>
         </div>
         <div className="text-gray-500">
           <span>{record.company} - {record.department}</span>
@@ -39,7 +42,7 @@ function JobRecordCard(props: JobRecordCardProps) {
             {Array.isArray(record.location) ? record.location.join('/') : record.location}
           </span>
           <span className="mx-2.5">|</span>
-          <span>发布于 {record.postTime}</span>
+          <span>发布于 {formatDate(new Date(record.postTime), true)}</span>
         </div>
       </div>
       <hr className="mt-5 mb-4 border-gray-200" />
