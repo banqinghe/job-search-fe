@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { JobPosition } from "@/models";
+import { JobPosition } from '@/models';
+import { formatDate } from '@/utils';
 
 interface JobPositionCardProps {
   className?: string;
@@ -41,7 +42,7 @@ function JobPositionCard(props: JobPositionCardProps) {
           <span>{jobInfo.experienceRequirement ?? '经验不限'} /</span>
           <span>{jobInfo.educationRequirement ?? '学历不限'}</span>
         </p>
-        <p className="text-xs text-gray-500">发布于 {jobInfo.postTime}</p>
+        <p className="text-xs text-gray-500">发布于 {formatDate(new Date(jobInfo.postTime))}</p>
       </div>
 
       {/* 公司信息 */}

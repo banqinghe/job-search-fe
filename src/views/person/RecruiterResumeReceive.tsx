@@ -61,7 +61,11 @@ function RecruiterInfo() {
           <button
             type="button"
             className="text-blue-400 hover:underline"
-            onClick={() => window.open(record.resumeUrl, '_blank')}
+            onClick={() => {
+              service
+                .changeResumeStatus({ recordId: record.recordId });
+              window.open(record.resumeUrl, '_blank');
+            }}
           >
             预览
           </button>
@@ -69,6 +73,8 @@ function RecruiterInfo() {
             type="button"
             className="text-blue-400 hover:underline"
             onClick={() => {
+              service
+                .changeResumeStatus({ recordId: record.recordId });
               handlePdfLink('http://127.0.0.1:3000/f0f7854d-a672-4a2b-a7c6-06131a0c1e97.pdf', 'test-d.pdf');
             }}
           >

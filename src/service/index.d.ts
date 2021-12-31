@@ -59,7 +59,7 @@ export interface UploadFilePayload {
 /** 只需要用户名的公用 PayLoad 类型 */
 export interface UsernamePayload {
   username: string;
-  count: number;
+  // count: number;
 }
 
 export interface PostJobPayload {
@@ -82,13 +82,29 @@ export interface ChangeJobPayload {
   poster: string;
 }
 
-export interface DeleteJobPayload {
+export interface JobPayload {
   jobId: string;
+  username: string;
+}
+
+export interface CompanyPayload {
+  companyName: string;
 }
 
 /** 需要用户名分页信息的 Payload 类型 */
 export interface UsernameWithPagePayload {
   username: string;
+  pageSize: number;
+  pageNumber: number;
+}
+
+export interface UsernameWithCountPayload {
+  username: string;
+  count: number;
+}
+
+export interface TitleWithPagePayload {
+  title: string;
   pageSize: number;
   pageNumber: number;
 }
@@ -111,14 +127,25 @@ export interface Service {
   userChangePassword: ServiceFunction<UserChangePasswordPayload>;
   userUpdateInfo: ServiceFunction<JobHunterUpdateInfoPayload | RecruiterUpdateInfoPayload>;
   uploadFile: ServiceFunction<UploadFilePayload>;
-  userRecommendJobs: ServiceFunction<UsernamePayload>;
+  userRecommendJobs: ServiceFunction<UsernameWithCountPayload>;
+  userRecommendCompanies: ServiceFunction<UsernameWithCountPayload>;
   userJobStars: ServiceFunction<UsernamePayload>;
   userJobRecords: ServiceFunction<UsernamePayload>;
+  userGetAllCollectedJobs: ServiceFunction<UsernamePayload>;
+  userGetAllResumeRecord: ServiceFunction<UsernamePayload>;
+
+  getAllJobsByCompany: ServiceFunction<CompanyPayload>;
   getAllPostJobs: ServiceFunction<UsernamePayload>;
   postJob: ServiceFunction<PostJobPayload>;
+  getOneJob: ServiceFunction<JobPayload>;
   changeJob: ServiceFunction<ChangeJobPayload>;
-  deleteJob: ServiceFunction<DeleteJobPayload>;
+  deleteJob: ServiceFunction<JobPayload>;
+  getOneCompany: ServiceFunction<CompanyPayload>;
   getAllResumeReceive: ServiceFunction<UsernameWithPagePayload>;
   searchResumeReceive: ServiceFunction<SearchResumeReceivePayload>;
   changeResumeStatus: ServiceFunction<ChangeResumeStatusPayload>;
+  searchJob: ServiceFunction<TitleWithPagePayload>;
+  searchCompany: ServiceFunction<CompanyPayload>;
+  collectJob: ServiceFunction<JobPayload>;
+  resumeJob: ServiceFunction<JobPayload>;
 }

@@ -250,7 +250,8 @@ def company_from_db(db: Session, db_company: models.Company):
     return ret
 
 
-def add_company(db: Session, company: schemas.Company):
+def add_company(db: Session, company: schemas.CompanyRequest):
+    print(company.dict())
     db_company = models.Company(**company.dict())
     db.add(db_company)
     db.commit()
@@ -272,6 +273,7 @@ def star_exists(db: Session, username: str, job_id: UUID):
 
 def get_jobs_by_company(db: Session, company: str):
     return db.query(models.JobPosition)\
-        .join(models.User, models.User.name == models.JobPosition.poster)\
-        .filter(models.User.company == company)\
-        .all()
+            .join(models.User, models.User.username == models.JobPosition.poster)\
+            .filter(models.User.company == company)\
+            .all()
+

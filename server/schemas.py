@@ -99,14 +99,17 @@ class RecruiterJobRecord(BaseModel):
     status: str
 
 
-class Company(BaseModel):
+class CompanyRequest(BaseModel):
     name: str
     description: str
     logoUrl: str
     officialLink: str
-    jobNumber: int
-    resumeNumber: int
     detail: str
 
     class Config:
         orm_mode = True
+
+
+class Company(CompanyRequest):
+    jobNumber: Optional[int]
+    resumeNumber: Optional[int]
