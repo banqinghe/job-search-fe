@@ -220,11 +220,20 @@ def search_company(db: Session, name: str):
 
 
 def search_job(db: Session, title: str, pageSize: int, pageNumber: int):
-    return db.query(models.JobPosition)\
+    as_title = db.query(models.JobPosition)\
         .filter(models.JobPosition.title.like(f"%{title}%"))\
         .offset(pageSize * (pageNumber - 1))\
         .limit(pageSize)\
         .all()
+
+    as_company = db.query(models.JobPosition)\
+        .join(models.User, models.User.username == models.JobPosition.poster)\
+        .filter(models.User.company.like(f"%{title}%"))\
+        .offset(pageSize * (pageNumber - 1))\
+        .limit(pageSize)\
+        .all()
+
+    return as_title + as_company
 
 
 def company_from_db(db: Session, db_company: models.Company):
@@ -233,7 +242,7 @@ def company_from_db(db: Session, db_company: models.Company):
         .join(models.User, models.User.username == models.JobPosition.poster)\
         .filter(models.User.company == db_company.name)\
         .count()
-    ret.jobNumber = db.query(models.JobRecord)\
+    ret.resumeNumber = db.query(models.JobRecord)\
         .join(models.JobPosition, models.JobPosition.id == models.JobRecord.jobId)\
         .join(models.User, models.User.username == models.JobPosition.poster)\
         .filter(models.User.company == db_company.name)\
