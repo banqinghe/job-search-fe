@@ -67,7 +67,7 @@ function PersonalInfo() {
               });
           }}
         >
-          <Avatar size={116} src={userInfo.avatarUrl ?? userInfo.avaterUrl ?? defaultAvatarUrl} />
+          <Avatar size={116} src={userInfo.avatarUrl ?? defaultAvatarUrl} />
         </Upload>
         <div className="flex-1">
           {/* 真实姓名 */}

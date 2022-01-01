@@ -17,6 +17,7 @@ import {
   CompanyPayload,
   TitleWithPagePayload,
   UsernameWithCountPayload,
+  JobIdPayload,
 } from './index.d';
 
 const host = 'http://127.0.0.1:8000/'
@@ -169,7 +170,7 @@ const service: Service = {
   changeJob: (payload: ChangeJobPayload) => axios.patch(host + 'job/change_job', payload),
 
   /** 删除已发布的职位 */
-  deleteJob: (payload: JobPayload) => 
+  deleteJob: (payload: JobIdPayload) => 
     axios.delete(host + 'job/delete_job', { params: {
       job_id: payload.jobId,
     }}),

@@ -48,7 +48,7 @@ function JobInfoForm(props: JobInfoFormProps) {
           options={JobData}
           placeholder="选择职位类型"
           expandTrigger="hover"
-          onChange={value => {
+          onChange={(value: any) => {
             const lastValue = value[value.length - 1];
             const candidateList = (JobTag as Record<string, string[]>)[lastValue];
             if (candidateList && candidateList.length) {
