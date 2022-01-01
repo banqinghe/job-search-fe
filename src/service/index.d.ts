@@ -87,6 +87,10 @@ export interface JobPayload {
   username: string;
 }
 
+export interface JobIdPayload {
+  jobId: string;
+}
+
 export interface CompanyPayload {
   companyName: string;
 }
@@ -139,7 +143,7 @@ export interface Service {
   postJob: ServiceFunction<PostJobPayload>;
   getOneJob: ServiceFunction<JobPayload>;
   changeJob: ServiceFunction<ChangeJobPayload>;
-  deleteJob: ServiceFunction<JobPayload>;
+  deleteJob: ServiceFunction<JobIdPayload>;
   getOneCompany: ServiceFunction<CompanyPayload>;
   getAllResumeReceive: ServiceFunction<UsernameWithPagePayload>;
   searchResumeReceive: ServiceFunction<SearchResumeReceivePayload>;

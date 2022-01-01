@@ -209,7 +209,7 @@ function RecruiterInfo() {
               });
           }}
         >
-          <Avatar size={116} src={userInfo.avatarUrl ?? userInfo.avaterUrl ?? defaultAvatarUrl} />
+          <Avatar size={116} src={userInfo.avatarUrl ?? defaultAvatarUrl} />
         </Upload>
         {/* <Avatar size={116} src="https://up.enterdesk.com/edpic/6f/0b/c1/6f0bc15cfd268f459ac9c6340ca248de.jpg" /> */}
         <div className="flex-1">
