@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
@@ -12,7 +12,7 @@ router = APIRouter()
 
 @router.get(
     "/get_all_post_job",
-    response_model=list[schemas.JobPostResponse]
+    response_model=List[schemas.JobPostResponse]
 )
 def get_all_post_job(username: str,
                      db: Session = Depends(get_db)):
@@ -92,7 +92,7 @@ def change_resume_status(
 
 @router.get(
     "/get_all_resume_receive",
-    response_model=list[schemas.RecruiterJobRecord]
+    response_model=List[schemas.RecruiterJobRecord]
 )
 def get_recruiter_records(
         username: str,
@@ -104,7 +104,7 @@ def get_recruiter_records(
 
 @router.get(
     "/job_records",
-    response_model=list[schemas.CandidateJobRecord]
+    response_model=List[schemas.CandidateJobRecord]
 )
 def get_candidate_records(
         username: str,
@@ -114,7 +114,7 @@ def get_candidate_records(
 
 @router.get(
     "/get_collected_jobs",
-    response_model=list[schemas.JobPostResponse]
+    response_model=List[schemas.JobPostResponse]
 )
 def get_candidate_records(
         username: str,
@@ -124,7 +124,7 @@ def get_candidate_records(
 
 @router.get(
     "/search_resume_receive",
-    response_model=list[schemas.RecruiterJobRecord]
+    response_model=List[schemas.RecruiterJobRecord]
 )
 def search_recruiter_records(
         pageSize: int,
@@ -138,7 +138,7 @@ def search_recruiter_records(
 
 @router.get(
     "/recommend_jobs",
-    response_model=list[schemas.JobPostResponse]
+    response_model=List[schemas.JobPostResponse]
 )
 def recommend_jobs(
         username: str,
@@ -149,7 +149,7 @@ def recommend_jobs(
 
 @router.get(
     "/search_job",
-    response_model=list[schemas.JobPostResponse]
+    response_model=List[schemas.JobPostResponse]
 )
 def search_job(
         title: str,

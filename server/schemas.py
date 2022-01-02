@@ -55,7 +55,7 @@ class UserChangePassword(UserBase):
 
 class JobPostRequest(BaseModel):
     title: str
-    location: list[str]
+    location: List[str]
     experienceRequirement: Optional[str]
     educationRequirement: Optional[str]
     salaryRange: Optional[List[int]]

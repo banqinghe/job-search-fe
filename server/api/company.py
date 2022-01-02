@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
 
 import schemas
 import crud
@@ -28,7 +29,7 @@ def get_one(name: str,
 
 @router.get(
     "/search_company",
-    response_model=list[schemas.Company]
+    response_model=List[schemas.Company]
 )
 def search_company(name: str,
                    db: Session = Depends(get_db)):
@@ -37,7 +38,7 @@ def search_company(name: str,
 
 @router.get(
     "/recommend_companies",
-    response_model=list[schemas.Company]
+    response_model=List[schemas.Company]
 )
 def recommend_companies(username: str,
                         count: int,
@@ -47,7 +48,7 @@ def recommend_companies(username: str,
 
 @router.get(
     "/get_jobs",
-    response_model=list[schemas.JobPostResponse]
+    response_model=List[schemas.JobPostResponse]
 )
 def get_jobs(name: str,
              db: Session = Depends(get_db)):
