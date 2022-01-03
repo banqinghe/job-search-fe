@@ -75,7 +75,7 @@ function RecruiterInfo() {
             onClick={() => {
               service
                 .changeResumeStatus({ recordId: record.recordId });
-              handlePdfLink('http://124.223.21.196:8001/f0f7854d-a672-4a2b-a7c6-06131a0c1e97.pdf', 'test-d.pdf');
+              handlePdfLink('//124.223.21.196:8001/f0f7854d-a672-4a2b-a7c6-06131a0c1e97.pdf', 'test-d.pdf');
             }}
           >
             下载
