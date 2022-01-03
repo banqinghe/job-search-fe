@@ -20,7 +20,7 @@ import {
   JobIdPayload,
 } from './index.d';
 
-const host = 'http://127.0.0.1:8000/'
+const host = 'http://124.223.21.196:8000/'
 
 const service: Service = {
   /** 用户登录 */
